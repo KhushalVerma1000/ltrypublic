@@ -89,7 +89,7 @@ export default async function PoolSeatsPage(props: {
     }
 
     const rounds = poolInfo.rounds || []
-    const activeRound = rounds.find((r: any) => r.status === "DRAWING") || rounds.find((r: any) => r.status === "ACTIVE") || rounds.find((r: any) => r.status === "UPCOMING")
+    const activeRound = rounds.find((r: any) => r.status === "DRAWING") || rounds.find((r: any) => r.status === "UPCOMING") || rounds.find((r: any) => r.status === "ACTIVE")
     const selectedRound = searchParams.roundId
         ? rounds.find((r: any) => r.publicId === searchParams.roundId)
         : activeRound || rounds[0]
@@ -115,7 +115,10 @@ export default async function PoolSeatsPage(props: {
                             <h1 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-2">
                                 {poolInfo.name}
                             </h1>
-                            <div className="flex items-center gap-4 text-sm text-gray-500 dark:text-gray-400">
+                            {poolInfo.notes && (
+                                <p className="text-sm text-gray-400 dark:text-gray-500 italic mb-3">{poolInfo.notes}</p>
+                            )}
+                            <div className="flex flex-wrap items-center gap-3 text-sm text-gray-500 dark:text-gray-400">
                                 <span className="flex items-center gap-1.5">
                                     <Info className="w-4 h-4" />
                                     ₹{perSeatPrice} per seat
@@ -125,6 +128,15 @@ export default async function PoolSeatsPage(props: {
                                     <Calendar className="w-4 h-4" />
                                     {rounds.length} Rounds Total
                                 </span>
+                                {selectedRound && (
+                                    <>
+                                        <span className="w-1 h-1 bg-gray-300 rounded-full" />
+                                        <span className="flex items-center gap-1.5 font-semibold text-purple-600 dark:text-purple-400">
+                                            <Trophy className="w-4 h-4" />
+                                            Prize Pool: ₹{(perSeatPrice * (selectedRound.availableSeats ?? 0)).toLocaleString('en-IN')}
+                                        </span>
+                                    </>
+                                )}
                             </div>
                         </div>
 
@@ -132,6 +144,13 @@ export default async function PoolSeatsPage(props: {
                         <div className="flex flex-wrap gap-2">
                             {rounds.map((round: any) => {
                                 const isActive = selectedRound?.publicId === round.publicId
+                                const statusColor = round.status === "DRAWING"
+                                    ? "bg-red-500 text-white"
+                                    : round.status === "UPCOMING"
+                                    ? "bg-amber-500 text-white"
+                                    : round.status === "CLOSED"
+                                    ? "bg-gray-500 text-white"
+                                    : "bg-emerald-500 text-white"
                                 return (
                                     <Link
                                         key={round.publicId}
@@ -142,10 +161,7 @@ export default async function PoolSeatsPage(props: {
                                             }`}
                                     >
                                         Round {round.roundNumber}
-                                        <span className={`ml-2 px-1.5 py-0.5 rounded-md text-[8px] uppercase ${round.status === "ACTIVE" ? "bg-emerald-500 text-white" :
-                                                round.status === "CLOSED" ? "bg-gray-500 text-white" :
-                                                    "bg-amber-500 text-white"
-                                            }`}>
+                                        <span className={`ml-2 px-1.5 py-0.5 rounded-md text-[8px] uppercase ${statusColor}`}>
                                             {round.status}
                                         </span>
                                     </Link>
