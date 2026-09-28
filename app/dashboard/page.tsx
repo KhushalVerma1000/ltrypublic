@@ -107,6 +107,12 @@ export default async function DashboardPage({
           </Link>
 
           <div className="flex items-center gap-4">
+            <Link
+              href="/wallet"
+              className="text-xs font-medium text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white underline underline-offset-4 decoration-gray-300 dark:decoration-gray-700 transition-colors"
+            >
+              Wallet
+            </Link>
             <div className="flex flex-col items-end">
               <span className="text-xs font-semibold text-gray-900 dark:text-white">
                 {user?.name ?? "Player"}

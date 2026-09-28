@@ -45,6 +45,29 @@ async function getWinners(poolId: string, roundId: string): Promise<any[]> {
     }
 }
 
+async function getMyWinningSeatNamesForRound(roundPublicId: string): Promise<string[]> {
+    try {
+        const cookieStore = await cookies()
+        const accessToken = cookieStore.get("accessToken")?.value
+        const refreshToken = cookieStore.get("refreshToken")?.value
+        if (!accessToken && !refreshToken) return []
+
+        const res = await fetch(`${process.env.API_URL}/users/winnings`, {
+            headers: { Cookie: `accessToken=${accessToken || ""}; refreshToken=${refreshToken || ""}` },
+            next: { revalidate: 0 }
+        })
+        if (!res.ok) return []
+        const data = await res.json()
+        if (!data.success || !Array.isArray(data.data)) return []
+        return data.data
+            .filter((w: any) => w.seat?.round?.publicId === roundPublicId)
+            .map((w: any) => w.seat.name)
+    } catch (e) {
+        console.error("Error fetching user winnings:", e)
+        return []
+    }
+}
+
 async function getPoolInfo(publicId: string): Promise<any | null> {
     try {
         const [poolRes, roundsRes] = await Promise.all([
@@ -99,6 +122,10 @@ export default async function PoolSeatsPage(props: {
         (selectedRound && selectedRound.status === "CLOSED") ? getWinners(params.publicId, selectedRound.publicId) : Promise.resolve([])
     ])
 
+    const myWinningSeatNames = (selectedRound && selectedRound.status === "CLOSED")
+        ? await getMyWinningSeatNamesForRound(selectedRound.publicId)
+        : []
+
     const cookieStore = await cookies()
     const isLoggedIn = !!cookieStore.get("accessToken")
     const perSeatPrice = selectedRound?.priceSnapshot ? parseFloat(selectedRound.priceSnapshot) : (parseFloat(poolInfo?.perSeatPrice) || 0)
@@ -133,7 +160,7 @@ export default async function PoolSeatsPage(props: {
                                         <span className="w-1 h-1 bg-gray-300 rounded-full" />
                                         <span className="flex items-center gap-1.5 font-semibold text-purple-600 dark:text-purple-400">
                                             <Trophy className="w-4 h-4" />
-                                            Prize Pool: ₹{(perSeatPrice * (selectedRound.availableSeats ?? 0)).toLocaleString('en-IN')}
+                                            Prize Pool: ₹{(perSeatPrice * Math.max((selectedRound.seatsSnapshot ?? 0) - (selectedRound.availableSeats ?? 0), 0)).toLocaleString('en-IN')}
                                         </span>
                                     </>
                                 )}
@@ -141,32 +168,37 @@ export default async function PoolSeatsPage(props: {
                         </div>
 
                         {/* Round Switcher */}
-                        <div className="flex flex-wrap gap-2">
-                            {rounds.map((round: any) => {
-                                const isActive = selectedRound?.publicId === round.publicId
-                                const statusColor = round.status === "DRAWING"
-                                    ? "bg-red-500 text-white"
-                                    : round.status === "UPCOMING"
-                                    ? "bg-amber-500 text-white"
-                                    : round.status === "CLOSED"
-                                    ? "bg-gray-500 text-white"
-                                    : "bg-emerald-500 text-white"
-                                return (
-                                    <Link
-                                        key={round.publicId}
-                                        href={`/pools/${params.publicId}?roundId=${round.publicId}`}
-                                        className={`px-4 py-2 rounded-lg text-xs font-bold transition-all border ${isActive
-                                                ? "bg-purple-600 border-purple-600 text-white shadow-lg shadow-purple-200 dark:shadow-none"
-                                                : "bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 hover:border-purple-300"
-                                            }`}
-                                    >
-                                        Round {round.roundNumber}
-                                        <span className={`ml-2 px-1.5 py-0.5 rounded-md text-[8px] uppercase ${statusColor}`}>
-                                            {round.status}
-                                        </span>
-                                    </Link>
-                                )
-                            })}
+                        <div className="flex flex-col items-start md:items-end gap-1.5">
+                            <div className="flex flex-wrap gap-2 md:justify-end">
+                                {rounds.map((round: any) => {
+                                    const isActive = selectedRound?.publicId === round.publicId
+                                    const statusColor = round.status === "DRAWING"
+                                        ? "bg-red-500 text-white"
+                                        : round.status === "UPCOMING"
+                                        ? "bg-amber-500 text-white"
+                                        : round.status === "CLOSED"
+                                        ? "bg-gray-500 text-white"
+                                        : "bg-emerald-500 text-white"
+                                    return (
+                                        <Link
+                                            key={round.publicId}
+                                            href={`/pools/${params.publicId}?roundId=${round.publicId}`}
+                                            className={`px-4 py-2 rounded-lg text-xs font-bold transition-all border ${isActive
+                                                    ? "bg-purple-600 border-purple-600 text-white shadow-lg shadow-purple-200 dark:shadow-none"
+                                                    : "bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 hover:border-purple-300"
+                                                }`}
+                                        >
+                                            Round {round.roundNumber}
+                                            <span className={`ml-2 px-1.5 py-0.5 rounded-md text-[8px] uppercase ${statusColor}`}>
+                                                {round.status}
+                                            </span>
+                                        </Link>
+                                    )
+                                })}
+                            </div>
+                            <p className="text-[11px] text-gray-400 dark:text-gray-500">
+                                Active = open to book · Upcoming = opens soon · Drawing = being drawn now · Closed = results are in
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -186,15 +218,15 @@ export default async function PoolSeatsPage(props: {
                                     <AlertCircle className="w-6 h-6 text-amber-600 dark:text-amber-400 shrink-0" />
                                 </div>
                                 <div>
-                                    <h3 className="text-amber-900 dark:text-amber-400 font-bold text-lg">This Round is Closed</h3>
+                                    <h3 className="text-amber-900 dark:text-amber-400 font-bold text-lg">This round has been drawn</h3>
                                     <p className="text-amber-800/80 dark:text-amber-500/80 text-sm">
-                                        Seat booking is no longer available for this round. You can view the winners and results below.
+                                        Booking has closed for Round {selectedRound.roundNumber} — see who won below.
                                     </p>
                                 </div>
                             </div>
 
                             {/* Winners Section */}
-                            <RoundWinners winners={winners} />
+                            <RoundWinners winners={winners} yourSeatNames={myWinningSeatNames} />
 
                             <div className="space-y-6 pt-12 border-t border-gray-100 dark:border-gray-800">
                                 <h2 className="text-xl font-bold text-gray-900 dark:text-white flex items-center gap-2">
@@ -223,9 +255,17 @@ export default async function PoolSeatsPage(props: {
                                     Ends {new Date(selectedRound.endsAt).toLocaleDateString()}
                                 </div>
                             </div>
+                            <p className="text-xs text-gray-400 dark:text-gray-500 -mt-4">
+                                Pick up to 4 seats per booking. Your seats are held for 5 minutes while you pay.
+                            </p>
                             
                             {selectedRound.status === "DRAWING" && selectedRound.drawnAt && (
-                                <DrawingTimer drawnAt={selectedRound.drawnAt} />
+                                <div className="space-y-1">
+                                    <DrawingTimer drawnAt={selectedRound.drawnAt} />
+                                    <p className="text-xs text-center text-gray-400 dark:text-gray-500">
+                                        Winners are picked automatically when the timer ends — no need to stay on this page.
+                                    </p>
+                                </div>
                             )}
 
                             {seats.length === 0 ? (
@@ -239,6 +279,8 @@ export default async function PoolSeatsPage(props: {
                                     isLoggedIn={isLoggedIn}
                                     roundId={selectedRound.publicId}
                                     isReadOnly={selectedRound.status === "DRAWING"}
+                                    poolName={poolInfo.name}
+                                    roundNumber={selectedRound.roundNumber}
                                 />
                             )}
                         </div>

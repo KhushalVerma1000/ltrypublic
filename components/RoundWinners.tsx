@@ -12,7 +12,7 @@ interface Winner {
     };
 }
 
-export default function RoundWinners({ winners }: { winners: Winner[] }) {
+export default function RoundWinners({ winners, yourSeatNames = [] }: { winners: Winner[]; yourSeatNames?: string[] }) {
     if (!winners || winners.length === 0) {
         return (
             <div className="bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 rounded-2xl p-12 text-center">
@@ -56,11 +56,18 @@ export default function RoundWinners({ winners }: { winners: Winner[] }) {
             </h2>
 
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                {sortedWinners.map((winner) => (
+                {sortedWinners.map((winner) => {
+                    const isYours = yourSeatNames.includes(winner.seat.name);
+                    return (
                     <div
                         key={winner.id}
-                        className={`p-6 rounded-2xl border transition-all hover:shadow-lg ${getBgColor(winner.position)}`}
+                        className={`p-6 rounded-2xl border transition-all hover:shadow-lg ${getBgColor(winner.position)} ${isYours ? "ring-2 ring-emerald-500 ring-offset-2 dark:ring-offset-gray-950 relative" : ""}`}
                     >
+                        {isYours && (
+                            <span className="absolute -top-3 left-6 bg-emerald-600 text-white text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full shadow-sm">
+                                You won
+                            </span>
+                        )}
                         <div className="flex items-center justify-between mb-4">
                             <div className={`p-2 rounded-lg bg-white dark:bg-gray-800 shadow-sm ${getMedalColor(winner.position)}`}>
                                 <Medal className="w-6 h-6" />
@@ -93,7 +100,8 @@ export default function RoundWinners({ winners }: { winners: Winner[] }) {
                             </div>
                         </div>
                     </div>
-                ))}
+                    );
+                })}
             </div>
         </div>
     );

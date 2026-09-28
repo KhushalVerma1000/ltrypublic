@@ -4,7 +4,7 @@ import { cookies } from "next/headers"
 import { redirect } from "next/navigation"
 
 export const bookSeatsAction = async (
-    _prevState: { error?: string, success?: boolean, order?: any, razorpayKey?: string } | undefined,
+    _prevState: { error?: string, success?: boolean, order?: any, razorpayKey?: string, tokenExpiresAt?: string } | undefined,
     formData: FormData
 ) => {
     const amountStr = formData.get("amount")?.valueOf()
@@ -87,7 +87,8 @@ export const bookSeatsAction = async (
         return {
             success: true,
             order: data.data.order,
-            razorpayKey: process.env.RAZORPAY_KEY_ID
+            razorpayKey: process.env.RAZORPAY_KEY_ID,
+            tokenExpiresAt: data.data.booking?.tokenExpiresAt
         };
 
     } catch (e) {
