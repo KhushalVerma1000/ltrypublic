@@ -2,12 +2,16 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import NextDrawBar from "./NextDrawBar";
 
 export default function Navbar({ isLoggedIn = false }: { isLoggedIn?: boolean }) {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
     <nav className="fixed top-0 w-full bg-white dark:bg-gray-900 shadow-md z-50">
+      {/* Persistent next-draw strip — sits above the main nav row so every
+          page (via Navbar) surfaces the live/next round without extra wiring */}
+      <NextDrawBar />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}

@@ -105,7 +105,8 @@ export default async function GamesPage() {
             <Navbar isLoggedIn={isLoggedIn} />
 
             {/* Hero Section */}
-            <div className="pt-24 sm:pt-32 pb-12 px-4 sm:px-6 relative overflow-hidden">
+            {/* +36px reserved for Navbar's persistent next-draw strip */}
+            <div className="pt-[132px] sm:pt-[164px] pb-12 px-4 sm:px-6 relative overflow-hidden">
                 <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full -z-10 opacity-30">
                 </div>
 

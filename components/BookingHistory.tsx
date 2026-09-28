@@ -1,7 +1,9 @@
 "use client";
 
-import { Calendar, Ticket, CheckCircle2, Clock, AlertCircle, IndianRupee, Hash, Trophy, ChevronLeft, ChevronRight } from "lucide-react";
+import { Calendar, Ticket, CheckCircle2, Clock, AlertCircle, IndianRupee, Hash, Trophy, ChevronLeft, ChevronRight, Copy, Check } from "lucide-react";
 import Link from "next/link";
+import { useState } from "react";
+import { toast } from "sonner";
 
 interface Pool {
   name: string;
@@ -64,6 +66,19 @@ export default function BookingHistory({
       </div>
     );
   }
+
+  const [copiedId, setCopiedId] = useState<string | null>(null);
+
+  const copyTicketId = async (id: string) => {
+    try {
+      await navigator.clipboard.writeText(id);
+      setCopiedId(id);
+      toast.success("Ticket ID copied");
+      setTimeout(() => setCopiedId((prev) => (prev === id ? null : prev)), 2000);
+    } catch {
+      toast.error("Couldn't copy — long-press or select the ID manually");
+    }
+  };
 
   const getStatusBadge = (status: string) => {
     switch (status) {
@@ -143,6 +158,14 @@ export default function BookingHistory({
                         <p className="text-xs font-mono text-gray-400 uppercase tracking-tighter">
                           ID: {booking.id.slice(-8)}
                         </p>
+                        <button
+                          type="button"
+                          onClick={() => copyTicketId(booking.id)}
+                          title="Copy full ticket ID — use it to check this ticket without logging in"
+                          className="text-gray-400 hover:text-purple-600 transition-colors"
+                        >
+                          {copiedId === booking.id ? <Check className="w-3 h-3" /> : <Copy className="w-3 h-3" />}
+                        </button>
                         <span className="w-1 h-1 bg-gray-300 rounded-full" />
                         <div className="flex items-center gap-1 text-xs font-semibold text-purple-600 dark:text-purple-400">
                           <Trophy className="w-3 h-3" />

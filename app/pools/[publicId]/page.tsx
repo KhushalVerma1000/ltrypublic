@@ -102,7 +102,7 @@ export default async function PoolSeatsPage(props: {
 
     if (!poolInfo) {
         return (
-            <div className="min-h-screen bg-gray-50 dark:bg-gray-950 flex flex-col pt-16">
+            <div className="min-h-screen bg-gray-50 dark:bg-gray-950 flex flex-col pt-[100px]">
                 <Navbar isLoggedIn={false} />
                 <div className="flex-1 flex items-center justify-center">
                     <p className="text-gray-500">Pool not found.</p>
@@ -131,7 +131,7 @@ export default async function PoolSeatsPage(props: {
     const perSeatPrice = selectedRound?.priceSnapshot ? parseFloat(selectedRound.priceSnapshot) : (parseFloat(poolInfo?.perSeatPrice) || 0)
 
     return (
-        <div className="min-h-screen bg-gray-50 dark:bg-gray-950 flex flex-col pt-16">
+        <div className="min-h-screen bg-gray-50 dark:bg-gray-950 flex flex-col pt-[100px]">
             <Navbar isLoggedIn={isLoggedIn} />
 
             {/* Header Section */}

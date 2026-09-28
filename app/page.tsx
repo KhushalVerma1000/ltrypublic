@@ -1,16 +1,19 @@
 import Link from "next/link";
 import { cookies } from "next/headers";
 import Navbar from "@/components/Navbar";
+import JackpotHero from "@/components/JackpotHero";
 import { ArrowRight } from "lucide-react";
 
-async function getPopularPools() {
+async function getLivePools() {
   try {
     const res = await fetch(`${process.env.API_URL}/pools`, {
       next: { revalidate: 60 }
     });
     if (!res.ok) return [];
     const data = await res.json();
-    return data.success && Array.isArray(data.data) ? data.data.filter((p: any) => p.activeRound).slice(0, 2) : [];
+    return data.success && Array.isArray(data.data)
+      ? data.data.filter((p: any) => p.activeRound && p.activeRound.status !== "CLOSED")
+      : [];
   } catch (e) {
     return [];
   }
@@ -20,34 +23,61 @@ export default async function Home() {
   // Check if user is logged in
   const cookieStore = await cookies();
   const isLoggedIn = !!cookieStore.get("accessToken");
-  const popularPools = await getPopularPools();
+  const livePools = await getLivePools();
+  const popularPools = livePools.slice(0, 2);
+
+  const totalPrizePool = livePools.reduce(
+    (sum: number, p: any) => sum + (p.activeRound?.prizePool ?? 0),
+    0
+  );
+
+  // Feature whichever round closes soonest — the one a visitor should act on first
+  const featuredPool = [...livePools].sort((a: any, b: any) => {
+    const aTarget = new Date(a.activeRound.status === "DRAWING" && a.activeRound.drawnAt ? a.activeRound.drawnAt : a.activeRound.endsAt).getTime();
+    const bTarget = new Date(b.activeRound.status === "DRAWING" && b.activeRound.drawnAt ? b.activeRound.drawnAt : b.activeRound.endsAt).getTime();
+    return aTarget - bTarget;
+  })[0];
+
+  const featured = featuredPool
+    ? {
+        poolName: featuredPool.name,
+        roundNumber: featuredPool.activeRound.roundNumber,
+        availableSeats: featuredPool.activeRound.availableSeats,
+        totalSeats: featuredPool.totalSeats,
+        endsAt: featuredPool.activeRound.endsAt,
+        drawnAt: featuredPool.activeRound.drawnAt,
+        isDrawing: featuredPool.activeRound.status === "DRAWING"
+      }
+    : null;
 
   return (
     <div className="min-h-screen bg-white dark:bg-gray-950">
       <Navbar isLoggedIn={isLoggedIn} />
 
       {/* Hero Section */}
-      <section className="pt-28 pb-20 px-4 sm:px-6 lg:px-8 border-b border-gray-100 dark:border-gray-800">
+      {/* pt-[148px] = 112px original hero spacing + 36px reserved for the
+          persistent next-draw strip Navbar renders when a round is live */}
+      <section className="pt-[148px] pb-20 px-4 sm:px-6 lg:px-8 border-b border-gray-100 dark:border-gray-800">
         <div className="max-w-7xl mx-auto">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             {/* Left Content */}
             <div>
               <p className="text-xs font-semibold uppercase tracking-widest text-purple-600 dark:text-purple-400 mb-4">
-                Trusted lottery platform
+                {featured ? `Round ${featured.roundNumber} closes soon` : "Haryana Lottery"}
               </p>
               <h1 className="text-4xl md:text-5xl font-medium text-gray-900 dark:text-white mb-5 leading-tight">
                 Win big with{" "}
                 <span className="text-purple-600 dark:text-purple-400">Haryana Lottery</span>
               </h1>
               <p className="text-base text-gray-500 dark:text-gray-400 mb-8 leading-relaxed max-w-md">
-                Safe, secure, and transparent lottery games trusted by thousands. Real-time draws, instant payouts.
+                Pick your seats, pay securely, and watch the draw happen live. Every rupee sold goes straight into the prize pool.
               </p>
               <div className="flex flex-col sm:flex-row gap-3">
                 <Link
-                  href="/signup"
+                  href={featured ? `/pools/${featuredPool.publicId}` : "/games"}
                   className="px-6 py-2.5 bg-purple-600 hover:bg-purple-700 text-white rounded-lg font-medium text-sm text-center transition-colors"
                 >
-                  Start playing
+                  Pick your seats
                 </Link>
                 <Link
                   href="/results"
@@ -58,44 +88,8 @@ export default async function Home() {
               </div>
             </div>
 
-            {/* Stats Card */}
-            <div className="bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 rounded-xl p-6">
-              <div className="flex items-center gap-4 py-4">
-                <div className="w-9 h-9 rounded-lg bg-gray-50 dark:bg-gray-800 flex items-center justify-center shrink-0">
-                  <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
-                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-                  </svg>
-                </div>
-                <div>
-                  <p className="text-xs text-gray-400 mb-0.5">Total winners</p>
-                  <p className="text-xl font-medium text-gray-900 dark:text-white">48,500+</p>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-4 py-4 border-t border-gray-100 dark:border-gray-800">
-                <div className="w-9 h-9 rounded-lg bg-gray-50 dark:bg-gray-800 flex items-center justify-center shrink-0">
-                  <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
-                    <line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
-                  </svg>
-                </div>
-                <div>
-                  <p className="text-xs text-gray-400 mb-0.5">Prize awarded</p>
-                  <p className="text-xl font-medium text-gray-900 dark:text-white">₹2.5 Cr+</p>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-4 py-4 border-t border-gray-100 dark:border-gray-800">
-                <div className="w-9 h-9 rounded-lg bg-gray-50 dark:bg-gray-800 flex items-center justify-center shrink-0">
-                  <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
-                    <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
-                  </svg>
-                </div>
-                <div>
-                  <p className="text-xs text-gray-400 mb-0.5">Active players</p>
-                  <p className="text-xl font-medium text-gray-900 dark:text-white">125,000+</p>
-                </div>
-              </div>
-            </div>
+            {/* Jackpot Card */}
+            <JackpotHero totalPrizePool={totalPrizePool} featured={featured} />
           </div>
         </div>
       </section>

@@ -1,6 +1,7 @@
 import { cookies } from "next/headers";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
+import TicketLookup from "@/components/TicketLookup";
 import { Trophy, Calendar, Hash, ArrowRight } from "lucide-react";
 
 export const dynamic = "force-dynamic";
@@ -79,7 +80,8 @@ export default async function ResultsPage() {
         <div className="min-h-screen bg-gray-50 dark:bg-gray-950">
             <Navbar isLoggedIn={isLoggedIn} />
 
-            <div className="pt-24 pb-12 px-4 sm:px-6 lg:px-8">
+            {/* pt-[132px] = 96px original spacing + 36px reserved for Navbar's next-draw strip */}
+            <div className="pt-[132px] pb-12 px-4 sm:px-6 lg:px-8">
                 <div className="max-w-5xl mx-auto">
                     <div className="mb-12 text-center">
                         <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-50 border border-blue-100 text-blue-600 text-xs font-semibold mb-3">
@@ -93,6 +95,10 @@ export default async function ResultsPage() {
                             Check out the latest winners from all our lottery draws. 
                             Transparency is our core value.
                         </p>
+                    </div>
+
+                    <div className="max-w-xl mx-auto mb-12">
+                        <TicketLookup />
                     </div>
 
                     <div className="space-y-8">
