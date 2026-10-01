@@ -74,7 +74,7 @@ export default async function Home() {
               </p>
               <div className="flex flex-col sm:flex-row gap-3">
                 <Link
-                  href={featured ? `/pools/${featuredPool.publicId}` : "/games"}
+                  href={featured ? `/pools/${featuredPool.publicId}?roundId=${featuredPool.activeRound.publicId}` : "/games"}
                   className="px-6 py-2.5 bg-purple-600 hover:bg-purple-700 text-white rounded-lg font-medium text-sm text-center transition-colors"
                 >
                   Pick your seats
@@ -105,7 +105,7 @@ export default async function Home() {
           <div className="grid md:grid-cols-3 gap-6">
              {popularPools.map((pool: any) => (
                <Link 
-                 href={`/pools/${pool.publicId}`} 
+                 href={pool.activeRound ? `/pools/${pool.publicId}?roundId=${pool.activeRound.publicId}` : `/pools/${pool.publicId}`}
                  key={pool.publicId}
                  className="group border border-gray-100 dark:border-gray-800 rounded-2xl p-8 bg-white dark:bg-gray-900 hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
                >

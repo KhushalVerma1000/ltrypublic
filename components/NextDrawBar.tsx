@@ -23,6 +23,7 @@ interface PoolSummary {
 
 interface NextDraw {
     poolPublicId: string;
+    roundPublicId: string;
     poolName: string;
     roundNumber: number;
     targetTime: number;
@@ -63,6 +64,7 @@ export default function NextDrawBar() {
                         const target = isDrawing && round.drawnAt ? round.drawnAt : round.endsAt;
                         return {
                             poolPublicId: p.publicId,
+                            roundPublicId: round.publicId,
                             poolName: p.name,
                             roundNumber: round.roundNumber,
                             targetTime: new Date(target).getTime(),
@@ -102,7 +104,7 @@ export default function NextDrawBar() {
 
     return (
         <Link
-            href={`/pools/${nextDraw.poolPublicId}`}
+            href={`/pools/${nextDraw.poolPublicId}?roundId=${nextDraw.roundPublicId}`}
             className="block w-full bg-purple-600 hover:bg-purple-700 transition-colors text-white text-xs sm:text-sm"
         >
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-9 flex items-center justify-center gap-2 text-center">

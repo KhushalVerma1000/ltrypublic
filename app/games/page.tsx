@@ -7,6 +7,15 @@ import { ArrowRight, Calendar, Clock, Ticket, Users, Zap, Trophy, Crown, Star } 
 
 export const dynamic = "force-dynamic";
 
+// Celebratory illustrations shown on pool cards. To use real photos instead,
+// drop cut-out (transparent) PNG/WEBP files in /public/cardimages and list
+// them here — the cards pick one per pool in order.
+const CARD_IMAGES = [
+    "/cardimages/family.svg",
+    "/cardimages/man.svg",
+    "/cardimages/couple.svg",
+];
+
 interface Pool {
     publicId: string;
     name: string;
@@ -144,26 +153,21 @@ export default async function GamesPage() {
                                 const availableSeats = pool.activeRound?.availableSeats ?? 0;
                                 const digits = String(availableSeats).padStart(3, '0').split('');
 
-                                const price = parseInt(pool.perSeatPrice);
-                                let poolImage = "/poolimages/200.png";
-                                if (price > 700) {
-                                    poolImage = "/poolimages/1000.png";
-                                } else if (price >= 300) {
-                                    poolImage = "/poolimages/500.png";
-                                }
+                                const poolImage = CARD_IMAGES[index % CARD_IMAGES.length];
 
                                 const roundStatus = pool.activeRound?.status ?? "UPCOMING";
                                 const statusLabel = roundStatus === "DRAWING" ? "Drawing Live" : roundStatus === "UPCOMING" ? "Upcoming" : "Active";
 
-                                const poolUrl = `/pools/${pool.publicId}`;
-                                const targetUrl = isLoggedIn ? poolUrl : `/login?redirect=${encodeURIComponent(poolUrl)}`;
+                                // Guests can browse the seat map; login is only asked for when they book.
+                                const targetUrl = pool.activeRound
+                                    ? `/pools/${pool.publicId}?roundId=${pool.activeRound.publicId}`
+                                    : `/pools/${pool.publicId}`;
 
                                 return (
                                     <Link
                                         href={targetUrl}
                                         key={pool.publicId}
-                                        className={`group relative w-full flex flex-col bg-gradient-to-br ${style.gradient} rounded-2xl md:rounded-3xl p-[1px] shadow-xl ${style.shadow} transition-all duration-500 hover:scale-[1.03] hover:-translate-y-1 overflow-hidden ${isSoldOut ? 'opacity-70 grayscale-[0.5] cursor-not-allowed' : ''}`}
-                                        style={{ pointerEvents: isSoldOut ? 'none' : 'auto' }}
+                                        className={`group relative w-full flex flex-col bg-gradient-to-br ${style.gradient} rounded-2xl md:rounded-3xl p-[1px] shadow-xl ${style.shadow} transition-all duration-500 hover:scale-[1.03] hover:-translate-y-1 overflow-hidden ${isSoldOut ? 'opacity-80 grayscale-[0.4]' : ''}`}
                                     >
                                         {/* Subtle Light Reflection overlay */}
                                         <div className="absolute inset-0 bg-linear-to-tr from-white/0 via-white/5 to-white/10 opacity-60 pointer-events-none" />
@@ -236,8 +240,8 @@ export default async function GamesPage() {
                                                                 </div>
                                                             ) : (
                                                                 <div className="inline-flex items-center gap-0.5 px-2 py-1 sm:px-3 sm:py-1.5 bg-white text-gray-900 rounded-full font-bold text-[9px] sm:text-[10px] transition-all duration-300 shadow-sm group-hover:shadow-md group-hover:scale-[1.04]">
-                                                                    <span>{isSoldOut ? 'Sold Out' : 'Join'}</span>
-                                                                    {!isSoldOut && <ArrowRight size={10} className="sm:w-3 sm:h-3 text-gray-900 transition-transform duration-300 group-hover:translate-x-0.5" />}
+                                                                    <span>{isSoldOut ? 'View seats' : 'Join'}</span>
+                                                                    <ArrowRight size={10} className="sm:w-3 sm:h-3 text-gray-900 transition-transform duration-300 group-hover:translate-x-0.5" />
                                                                 </div>
                                                             )}
                                                         </div>
@@ -262,9 +266,10 @@ export default async function GamesPage() {
                                                 <div className="relative w-full h-full transition-transform duration-700 group-hover:scale-[1.05] origin-bottom-right">
                                                     <Image
                                                         src={poolImage}
-                                                        alt="Pool Illustration"
+                                                        alt="Happy winners celebrating"
                                                         fill
                                                         sizes="(max-width: 640px) 42vw, 45vw"
+                                                        unoptimized
                                                         className="object-contain object-bottom pr-1.5 sm:pr-3 drop-shadow-[0_4px_10px_rgba(0,0,0,0.3)] sm:drop-shadow-[0_6px_15px_rgba(0,0,0,0.4)]"
                                                         priority
                                                     />

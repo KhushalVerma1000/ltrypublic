@@ -83,19 +83,36 @@ export default function SeatMapClient({
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
+    const MAX_SEATS = 4;
+
     const toggleSeat = (seat: Seat) => {
         if (isReadOnly) return;
         setSelectedIds(prev => {
             if (prev.includes(seat.publicId)) {
                 return prev.filter(id => id !== seat.publicId)
             } else {
-                if (prev.length >= 4) {
+                if (prev.length >= MAX_SEATS) {
                     toast.error("Up to 4 seats per booking — deselect one to add another")
                     return prev
                 }
                 return [...prev, seat.publicId]
             }
         })
+    }
+
+    // "Pick for me" — a seat-based Easy Pick. Randomly selects N seats that
+    // are AVAILABLE right now in liveSeats (not the stale initial `seats`
+    // prop), so it never suggests something someone else already grabbed.
+    const pickForMe = (count: number) => {
+        if (isReadOnly) return;
+        const available = liveSeats.filter(s => s.status === "AVAILABLE");
+        if (available.length === 0) {
+            toast.error("No seats are available right now");
+            return;
+        }
+        const n = Math.min(count, available.length, MAX_SEATS);
+        const shuffled = [...available].sort(() => Math.random() - 0.5);
+        setSelectedIds(shuffled.slice(0, n).map(s => s.publicId));
     }
 
     const rzpOpened = useRef(false);
@@ -260,6 +277,22 @@ export default function SeatMapClient({
                 </div>
             )}
 
+            {!isReadOnly && (
+                <div className="flex flex-wrap items-center gap-2 justify-center sm:justify-start px-1">
+                    <span className="text-xs font-medium text-gray-500 dark:text-gray-400 mr-1">Not fussed which seat?</span>
+                    {[1, 2, 4].map(n => (
+                        <button
+                            key={n}
+                            type="button"
+                            onClick={() => pickForMe(n)}
+                            className="px-3 py-1.5 text-xs font-semibold rounded-full border border-purple-200 dark:border-purple-800 text-purple-700 dark:text-purple-300 bg-purple-50 dark:bg-purple-900/20 hover:bg-purple-100 dark:hover:bg-purple-900/40 transition-colors"
+                        >
+                            Pick {n} for me
+                        </button>
+                    ))}
+                </div>
+            )}
+
             <div className="p-6 sm:p-10 bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 rounded-3xl overflow-hidden shadow-sm">
                 <SeatMap
                     seats={liveSeats}
@@ -305,7 +338,7 @@ export default function SeatMapClient({
                         ) : (
                             <button
                                 type="button"
-                                onClick={() => router.push(`/login?redirect=${window.location.pathname}`)}
+                                onClick={() => router.push(`/login?redirect=${encodeURIComponent(window.location.pathname + window.location.search)}`)}
                                 className="px-8 py-3 bg-purple-600 hover:bg-purple-700 text-white font-medium rounded-xl shadow-lg shadow-purple-600/20 transition-all active:scale-95 w-full sm:w-auto"
                             >
                                 Log in to Book
