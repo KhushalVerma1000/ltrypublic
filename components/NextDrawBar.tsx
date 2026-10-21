@@ -105,7 +105,7 @@ export default function NextDrawBar() {
     return (
         <Link
             href={`/pools/${nextDraw.poolPublicId}?roundId=${nextDraw.roundPublicId}`}
-            className="block w-full bg-brand-950 hover:bg-brand-900 transition-colors text-white text-xs sm:text-sm"
+            className="block w-full bg-brand-950 hover:bg-brand-900 border-b border-white/10 transition-colors text-white text-xs sm:text-sm"
         >
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-9 flex items-center justify-center gap-2 text-center min-w-0">
                 {nextDraw.isDrawing || isImminent ? (

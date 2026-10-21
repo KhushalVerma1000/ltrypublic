@@ -1,6 +1,6 @@
 import { cookies } from "next/headers"
 import Link from "next/link"
-import { logoutAction } from "./action"
+import PrivateShell from "@/components/PrivateShell"
 import BookingHistory from "@/components/BookingHistory"
 import UserWinnings from "@/components/UserWinnings"
 
@@ -93,53 +93,15 @@ export default async function DashboardPage({
   const totalDraws = pagination?.total ?? 0
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-950">
-      {/* Top Bar */}
-      <header className="bg-white dark:bg-gray-900 border-b border-gray-100 dark:border-gray-800 sticky top-0 z-10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-14 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2">
-            <div className="w-7 h-7 bg-gradient-to-br from-brand-600 to-brand-800 rounded-md flex items-center justify-center">
-              <span className="text-white font-bold text-xs">HL</span>
-            </div>
-            <span className="text-sm font-semibold text-gray-900 dark:text-white hidden sm:inline">
-              Haryana Lottery
-            </span>
-          </Link>
-
-          <div className="flex items-center gap-4">
-            <Link
-              href="/wallet"
-              className="text-xs font-medium text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white underline underline-offset-4 decoration-gray-300 dark:decoration-gray-700 transition-colors"
-            >
-              Wallet
-            </Link>
-            <div className="flex flex-col items-end">
-              <span className="text-xs font-semibold text-gray-900 dark:text-white">
-                {user?.name ?? "Player"}
-              </span>
-              <span className="text-[10px] text-gray-500 dark:text-gray-400">
-                {user?.phone}
-              </span>
-            </div>
-            <form action={logoutAction}>
-              <button
-                type="submit"
-                className="px-3 py-1.5 text-xs font-medium text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
-              >
-                Log out
-              </button>
-            </form>
-          </div>
-        </div>
-      </header>
-
-      {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="grid lg:grid-cols-3 gap-8">
+    <PrivateShell
+      title={`Hi, ${user?.name?.trim().split(" ")[0] ?? "Player"}`}
+      subtitle="Your tickets, winnings and payout details in one place."
+    >
+        <div className="grid lg:grid-cols-3 gap-6 lg:gap-8">
           {/* Left Column: Profile & Stats */}
           <div className="lg:col-span-1 space-y-6">
             {/* Welcome Banner */}
-            <div className="bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 rounded-2xl p-6 shadow-sm">
+            <div className="bg-white dark:bg-gray-900 border border-brand-100 dark:border-gray-800 rounded-2xl p-6 shadow-sm">
               <div className="flex items-center gap-4 mb-4">
                 <div className="w-12 h-12 bg-brand-100 dark:bg-brand-900/30 rounded-full flex items-center justify-center text-brand-600 dark:text-brand-400 text-xl font-bold">
                   {user?.name?.[0] ?? "P"}
@@ -190,18 +152,18 @@ export default async function DashboardPage({
             </div>
 
             {/* Stats Grid */}
-            <div className="grid grid-cols-1 gap-4">
+            <div className="grid grid-cols-3 lg:grid-cols-1 gap-3 lg:gap-4">
               {[
                 { label: "Active tickets", value: activeTicketsCount, color: "text-brand-600" },
-                { label: "Total winnings", value: `₹${totalWinningsAmount.toLocaleString()}`, color: "text-emerald-600" },
+                { label: "Total winnings", value: `₹${totalWinningsAmount.toLocaleString()}`, color: "text-brand-700" },
                 { label: "Total Entries", value: totalDraws, color: "text-brand-600" },
               ].map((stat) => (
                 <div
                   key={stat.label}
-                  className="bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 rounded-2xl p-5 shadow-sm"
+                  className="bg-white dark:bg-gray-900 border border-brand-100 dark:border-gray-800 rounded-2xl p-5 shadow-sm"
                 >
-                  <p className="text-xs font-medium text-gray-500 mb-1 uppercase tracking-wider">{stat.label}</p>
-                  <p className={`text-3xl font-bold ${stat.color}`}>
+                  <p className="text-[10px] sm:text-xs font-medium text-gray-500 mb-1 uppercase tracking-wider">{stat.label}</p>
+                  <p className={`text-xl sm:text-3xl font-bold ${stat.color} truncate`}>
                     {stat.value}
                   </p>
                 </div>
@@ -233,8 +195,7 @@ export default async function DashboardPage({
             <BookingHistory bookings={bookings} pagination={pagination} />
           </div>
         </div>
-      </main>
-    </div>
+    </PrivateShell>
   )
 }
 

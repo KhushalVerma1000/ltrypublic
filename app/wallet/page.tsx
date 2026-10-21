@@ -1,6 +1,5 @@
 import { cookies } from "next/headers";
-import Link from "next/link";
-import { ArrowLeft } from "lucide-react";
+import PrivateShell from "@/components/PrivateShell";
 import WalletLedger from "@/components/WalletLedger";
 
 async function getLedger(page = 1, limit = 15) {
@@ -40,29 +39,12 @@ export default async function WalletPage({
   const { balance, data: entries, pagination } = await getLedger(page, 15);
 
   return (
-    <div className="min-h-screen bg-[#FAF8F2] dark:bg-gray-950">
-      <header className="bg-white dark:bg-gray-900 border-b border-gray-100 dark:border-gray-800 sticky top-0 z-10">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 h-14 flex items-center">
-          <Link
-            href="/dashboard"
-            className="flex items-center gap-1.5 text-sm text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            Dashboard
-          </Link>
-        </div>
-      </header>
-
-      <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-        <div className="mb-8">
-          <h1 className="font-serif text-2xl text-gray-900 dark:text-white">Your wallet</h1>
-          <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
-            A running record of every ticket you've bought and every prize you've won.
-          </p>
-        </div>
-
-        <WalletLedger balance={balance} entries={entries} pagination={pagination} />
-      </main>
-    </div>
+    <PrivateShell
+      title="Your wallet"
+      subtitle="A running record of every ticket you've bought and every prize you've won."
+      widthClass="max-w-4xl"
+    >
+      <WalletLedger balance={balance} entries={entries} pagination={pagination} />
+    </PrivateShell>
   );
 }

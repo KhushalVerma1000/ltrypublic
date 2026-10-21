@@ -18,7 +18,6 @@ export interface PoolCardData {
         drawnAt: string | null;
         availableSeats: number;
         soldSeats?: number | null;
-        prizePool?: number;
     } | null;
 }
 
@@ -63,6 +62,8 @@ export default function PoolCard({
     const isLow = !isSoldOut && total > 0 && available / total <= 0.2;
     const status = STATUS[round?.status ?? "UPCOMING"] ?? STATUS.ACTIVE;
     const isDrawing = round?.status === "DRAWING";
+    // Prize pool is fixed: seat price × total seats. It does not grow as seats fill.
+    const prizePool = Number(pool.perSeatPrice) * total;
 
     // Guests can browse the seat map; login is only asked for when they book.
     const href = round ? `/pools/${pool.publicId}?roundId=${round.publicId}` : `/pools/${pool.publicId}`;
@@ -96,10 +97,13 @@ export default function PoolCard({
                     className={`object-contain object-bottom px-3 pt-8 sm:pt-10 transition-transform duration-500 group-hover:scale-105 ${isSoldOut ? "grayscale opacity-70" : ""}`}
                 />
 
-                {!!round?.prizePool && round.prizePool > 0 && (
-                    <span className="absolute left-2 bottom-2 sm:left-3 sm:bottom-3 z-10 inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-ink/85 text-gold-300 text-[10px] sm:text-xs font-bold backdrop-blur">
+                {prizePool > 0 && (
+                    <span
+                        title="Total prize pool"
+                        className="absolute left-2 bottom-2 sm:left-3 sm:bottom-3 z-10 inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-ink/85 text-gold-300 text-[10px] sm:text-xs font-bold backdrop-blur"
+                    >
                         <Sparkles className="w-3 h-3" />
-                        {formatINR(round.prizePool)}
+                        Prize {formatINR(prizePool)}
                     </span>
                 )}
 
