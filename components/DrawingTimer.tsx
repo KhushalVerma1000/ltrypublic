@@ -5,9 +5,11 @@ import { Timer } from "lucide-react";
 
 interface DrawingTimerProps {
   drawnAt: string | null;
+  /** Small inline pill for use inside cards */
+  compact?: boolean;
 }
 
-export function DrawingTimer({ drawnAt }: DrawingTimerProps) {
+export function DrawingTimer({ drawnAt, compact = false }: DrawingTimerProps) {
   const [timeLeft, setTimeLeft] = useState<string>("");
   const [isDrawing, setIsDrawing] = useState(false);
   const [mounted, setMounted] = useState(false);
@@ -57,12 +59,25 @@ export function DrawingTimer({ drawnAt }: DrawingTimerProps) {
 
   if (!drawnAt || !mounted) return null;
 
+  if (compact) {
+    return (
+      <div className="flex items-center justify-center gap-1.5 w-full h-10 rounded-xl bg-brand-50 border border-brand-200 text-brand-800 text-xs sm:text-sm font-bold">
+        <Timer className="h-4 w-4 shrink-0 animate-pulse" />
+        {isDrawing ? (
+          <span>Drawing now…</span>
+        ) : (
+          <span className="tabular-nums">Result in {timeLeft}</span>
+        )}
+      </div>
+    );
+  }
+
   return (
-    <div className="bg-purple-50 border border-purple-200 rounded-lg p-4 flex flex-col items-center justify-center space-y-2 mt-4 text-center shadow-sm w-full">
-      <Timer className="h-8 w-8 text-purple-600 animate-pulse" />
+    <div className="bg-brand-50 border border-brand-200 rounded-lg p-4 flex flex-col items-center justify-center space-y-2 mt-4 text-center shadow-sm w-full">
+      <Timer className="h-8 w-8 text-brand-600 animate-pulse" />
       {isDrawing ? (
         <div>
-          <h3 className="text-lg font-bold text-purple-700">Winner Announcement in Progress!</h3>
+          <h3 className="text-lg font-bold text-brand-700">Winner Announcement in Progress!</h3>
           <p className="text-sm text-gray-500">Please wait while we draw the winners.</p>
         </div>
       ) : (
@@ -70,7 +85,7 @@ export function DrawingTimer({ drawnAt }: DrawingTimerProps) {
           <h3 className="text-sm font-medium text-gray-500 uppercase tracking-wider">
             Winner Announcement In
           </h3>
-          <div className="text-3xl font-bold text-purple-600 tabular-nums mt-1">
+          <div className="text-3xl font-bold text-brand-600 tabular-nums mt-1">
             {timeLeft}
           </div>
         </div>

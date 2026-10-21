@@ -62,12 +62,12 @@ export default async function Home() {
           <div className="grid md:grid-cols-2 gap-12 items-center">
             {/* Left Content */}
             <div>
-              <p className="text-xs font-semibold uppercase tracking-widest text-purple-600 dark:text-purple-400 mb-4">
+              <p className="text-xs font-semibold uppercase tracking-widest text-brand-600 dark:text-brand-400 mb-4">
                 {featured ? `Round ${featured.roundNumber} closes soon` : "Haryana Lottery"}
               </p>
               <h1 className="text-5xl md:text-6xl text-navy mb-5 leading-[1.05]">
                 Pick your seats.{" "}
-                <span className="text-purple-600">Win the pool.</span>
+                <span className="text-brand-600">Win the pool.</span>
               </h1>
               <p className="text-base text-gray-500 dark:text-gray-400 mb-8 leading-relaxed max-w-md">
                 Choose up to 4 seats. When the round fills, winners are drawn live and paid to your wallet.
@@ -118,10 +118,10 @@ export default async function Home() {
                    </p>
                  </div>
                  <div className="flex items-center justify-between mt-4">
-                   <span className="text-xs font-bold text-purple-600 dark:text-purple-400 uppercase tracking-tighter">
+                   <span className="text-xs font-bold text-brand-600 dark:text-brand-400 uppercase tracking-tighter">
                      {pool.activeRound?.availableSeats ?? 0} seats left
                    </span>
-                   <div className="w-8 h-8 rounded-full bg-purple-50 dark:bg-purple-900/30 flex items-center justify-center group-hover:bg-purple-600 group-hover:text-white transition-colors">
+                   <div className="w-8 h-8 rounded-full bg-brand-50 dark:bg-brand-900/30 flex items-center justify-center group-hover:bg-brand-600 group-hover:text-white transition-colors">
                      <ArrowRight className="w-4 h-4" />
                    </div>
                  </div>
@@ -130,7 +130,7 @@ export default async function Home() {
              
              <div className="border border-dashed border-gray-200 dark:border-gray-800 rounded-2xl p-8 bg-gray-50/50 dark:bg-gray-900/50 flex flex-col justify-center items-center text-center">
                  <p className="text-gray-500 text-sm mb-4">See every pool that is open right now.</p>
-                 <Link href="/games" className="px-6 py-2.5 btn-primary rounded-xl font-bold text-sm transition-colors shadow-lg shadow-purple-200 dark:shadow-none">
+                 <Link href="/games" className="px-6 py-2.5 btn-primary rounded-xl font-bold text-sm transition-colors shadow-lg shadow-brand-200 dark:shadow-none">
                      Browse all games
                  </Link>
              </div>
@@ -153,18 +153,18 @@ export default async function Home() {
           <h2 className="text-4xl text-navy mb-8">How a round works</h2>
           <div className="grid md:grid-cols-[1.2fr_1fr] gap-5">
             <div className="bg-white border-2 border-navy rounded-[18px] shadow-[0_5px_0_var(--color-navy)] p-8">
-              <p className="font-display font-extrabold text-6xl text-purple-600">1</p>
+              <p className="font-display font-extrabold text-6xl text-brand-600">1</p>
               <h3 className="font-display font-extrabold text-2xl text-navy mt-1">Choose a round</h3>
               <p className="text-navy/70 mt-2 max-w-sm">Each card shows its prize pool, seat price and when it closes.</p>
             </div>
             <div className="grid gap-5">
               <div className="bg-white border-2 border-navy rounded-[18px] shadow-[0_5px_0_var(--color-navy)] p-6">
-                <p className="font-display font-extrabold text-3xl text-purple-600">2</p>
+                <p className="font-display font-extrabold text-3xl text-brand-600">2</p>
                 <h3 className="font-display font-extrabold text-lg text-navy">Pick your seats</h3>
                 <p className="text-sm text-navy/70 mt-1">Tap seats yourself or let us pick. We hold them while you pay.</p>
               </div>
               <div className="bg-white border-2 border-navy rounded-[18px] shadow-[0_5px_0_var(--color-navy)] p-6">
-                <p className="font-display font-extrabold text-3xl text-purple-600">3</p>
+                <p className="font-display font-extrabold text-3xl text-brand-600">3</p>
                 <h3 className="font-display font-extrabold text-lg text-navy">Watch the draw</h3>
                 <p className="text-sm text-navy/70 mt-1">Winners are drawn publicly and paid to your wallet.</p>
               </div>

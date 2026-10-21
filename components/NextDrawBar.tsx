@@ -105,20 +105,20 @@ export default function NextDrawBar() {
     return (
         <Link
             href={`/pools/${nextDraw.poolPublicId}?roundId=${nextDraw.roundPublicId}`}
-            className="block w-full btn-primary transition-colors text-xs sm:text-sm"
+            className="block w-full bg-brand-950 hover:bg-brand-900 transition-colors text-white text-xs sm:text-sm"
         >
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-9 flex items-center justify-center gap-2 text-center">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-9 flex items-center justify-center gap-2 text-center min-w-0">
                 {nextDraw.isDrawing || isImminent ? (
                     <>
-                        <Radio className="w-3.5 h-3.5 shrink-0 animate-pulse" />
-                        <span className="font-semibold">Live now — {nextDraw.poolName}, Round {nextDraw.roundNumber} is drawing</span>
+                        <Radio className="w-3.5 h-3.5 shrink-0 animate-pulse text-gold-300" />
+                        <span className="font-semibold truncate">Live now — {nextDraw.poolName}, Round {nextDraw.roundNumber} is drawing</span>
                     </>
                 ) : (
                     <>
-                        <Timer className="w-3.5 h-3.5 shrink-0" />
-                        <span>
+                        <Timer className="w-3.5 h-3.5 shrink-0 text-gold-300" />
+                        <span className="truncate">
                             Next draw: <span className="font-semibold">{nextDraw.poolName}, Round {nextDraw.roundNumber}</span>
-                            {" "}in <span className="font-mono font-semibold tabular-nums">{timeLeft}</span>
+                            {" "}in <span className="font-mono font-semibold tabular-nums text-gold-300">{timeLeft}</span>
                         </span>
                     </>
                 )}

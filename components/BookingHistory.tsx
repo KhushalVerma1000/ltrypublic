@@ -128,7 +128,7 @@ export default function BookingHistory({
     <div className="space-y-4">
       <div className="flex items-center justify-between mb-2">
         <h2 className="text-lg font-semibold text-gray-900 dark:text-white flex items-center gap-2">
-          <Ticket className="w-5 h-5 text-purple-600" />
+          <Ticket className="w-5 h-5 text-brand-600" />
           Recent Bookings
         </h2>
         <span className="text-xs text-gray-500 dark:text-gray-400">
@@ -150,8 +150,8 @@ export default function BookingHistory({
               <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div className="space-y-3 flex-1">
                   <div className="flex items-center gap-3">
-                    <div className="p-2 bg-purple-50 dark:bg-purple-900/20 rounded-lg group-hover:bg-purple-100 dark:group-hover:bg-purple-900/30 transition-colors">
-                      <Hash className="w-4 h-4 text-purple-600 dark:text-purple-400" />
+                    <div className="p-2 bg-brand-50 dark:bg-brand-900/20 rounded-lg group-hover:bg-brand-100 dark:group-hover:bg-brand-900/30 transition-colors">
+                      <Hash className="w-4 h-4 text-brand-600 dark:text-brand-400" />
                     </div>
                     <div>
                       <div className="flex items-center gap-2">
@@ -162,12 +162,12 @@ export default function BookingHistory({
                           type="button"
                           onClick={() => copyTicketId(booking.id)}
                           title="Copy full ticket ID — use it to check this ticket without logging in"
-                          className="text-gray-400 hover:text-purple-600 transition-colors"
+                          className="text-gray-400 hover:text-brand-600 transition-colors"
                         >
                           {copiedId === booking.id ? <Check className="w-3 h-3" /> : <Copy className="w-3 h-3" />}
                         </button>
                         <span className="w-1 h-1 bg-gray-300 rounded-full" />
-                        <div className="flex items-center gap-1 text-xs font-semibold text-purple-600 dark:text-purple-400">
+                        <div className="flex items-center gap-1 text-xs font-semibold text-brand-600 dark:text-brand-400">
                           <Trophy className="w-3 h-3" />
                           {poolName} {roundNumber ? `(Round ${roundNumber})` : ""}
                         </div>

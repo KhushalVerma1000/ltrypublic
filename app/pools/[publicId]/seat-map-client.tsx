@@ -185,7 +185,7 @@ export default function SeatMapClient({
                             contact: user?.phone || ""
                         },
                         theme: {
-                            color: "#1d5fd1" // matches the brand blue (purple-600 token)
+                            color: "#1d5fd1" // matches the brand blue (brand-600 token)
                         },
                         modal: {
                             ondismiss: async function () {
@@ -285,7 +285,7 @@ export default function SeatMapClient({
                             key={n}
                             type="button"
                             onClick={() => pickForMe(n)}
-                            className="px-3 py-1.5 text-xs font-semibold rounded-full border border-purple-200 dark:border-purple-800 text-purple-700 dark:text-purple-300 bg-purple-50 dark:bg-purple-900/20 hover:bg-purple-100 dark:hover:bg-purple-900/40 transition-colors"
+                            className="px-3 py-1.5 text-xs font-semibold rounded-full border border-brand-200 dark:border-brand-800 text-brand-700 dark:text-brand-300 bg-brand-50 dark:bg-brand-900/20 hover:bg-brand-100 dark:hover:bg-brand-900/40 transition-colors"
                         >
                             Pick {n} for me
                         </button>

@@ -51,8 +51,8 @@ export default function JackpotHero({ totalPrizePool, featured }: JackpotHeroPro
         : 0;
 
     return (
-        <div className="bg-gradient-to-br from-purple-600 to-purple-800 text-white rounded-2xl p-8 shadow-xl shadow-purple-600/20">
-            <div className="flex items-center gap-2 text-purple-200 text-xs font-semibold uppercase tracking-widest mb-3">
+        <div className="bg-gradient-to-br from-brand-600 to-brand-800 text-white rounded-2xl p-8 shadow-xl shadow-brand-600/20">
+            <div className="flex items-center gap-2 text-brand-200 text-xs font-semibold uppercase tracking-widest mb-3">
                 <Sparkles className="w-3.5 h-3.5" />
                 {featured ? "Prize pool right now" : "No live rounds right now"}
             </div>
@@ -60,18 +60,18 @@ export default function JackpotHero({ totalPrizePool, featured }: JackpotHeroPro
             <p className="text-4xl sm:text-5xl font-bold tabular-nums mb-1">
                 {formatINR(totalPrizePool)}
             </p>
-            <p className="text-purple-200 text-sm mb-6">
+            <p className="text-brand-200 text-sm mb-6">
                 {featured ? "across all rounds open for booking" : "check back soon for the next round"}
             </p>
 
             {featured && (
                 <div className="space-y-4">
                     <div>
-                        <div className="flex items-center justify-between text-xs text-purple-200 mb-1.5">
+                        <div className="flex items-center justify-between text-xs text-brand-200 mb-1.5">
                             <span className="font-medium text-white">{featured.poolName}, Round {featured.roundNumber}</span>
                             <span>{soldPct}% booked</span>
                         </div>
-                        <div className="h-2 w-full bg-purple-900/40 rounded-full overflow-hidden">
+                        <div className="h-2 w-full bg-brand-900/40 rounded-full overflow-hidden">
                             <div
                                 className="h-full bg-white rounded-full transition-all"
                                 style={{ width: `${soldPct}%` }}
@@ -79,8 +79,8 @@ export default function JackpotHero({ totalPrizePool, featured }: JackpotHeroPro
                         </div>
                     </div>
 
-                    <div className="flex items-center justify-between text-sm border-t border-purple-400/30 pt-4">
-                        <span className="text-purple-200">
+                    <div className="flex items-center justify-between text-sm border-t border-brand-400/30 pt-4">
+                        <span className="text-brand-200">
                             {featured.isDrawing ? "Drawing live now" : "Seats close in"}
                         </span>
                         <span className="font-mono font-semibold tabular-nums text-base">

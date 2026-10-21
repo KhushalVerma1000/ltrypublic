@@ -84,8 +84,8 @@ export default async function ResultsPage() {
             <div className="pt-[132px] pb-12 px-4 sm:px-6 lg:px-8">
                 <div className="max-w-5xl mx-auto">
                     <div className="mb-12 text-center">
-                        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-50 border border-blue-100 text-blue-600 text-xs font-semibold mb-3">
-                            <Trophy size={12} className="fill-blue-600" />
+                        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-brand-50 border border-brand-100 text-brand-600 text-xs font-semibold mb-3">
+                            <Trophy size={12} className="fill-brand-600" />
                             <span>Official Results</span>
                         </div>
                         <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
@@ -121,7 +121,7 @@ export default async function ResultsPage() {
                                         </div>
                                         <Link 
                                             href={`/pools/${pool.publicId}`}
-                                            className="text-sm font-semibold text-purple-600 dark:text-purple-400 hover:underline flex items-center gap-1 bg-purple-50 dark:bg-purple-900/20 px-4 py-2 rounded-xl transition-colors hover:bg-purple-100 dark:hover:bg-purple-900/40"
+                                            className="text-sm font-semibold text-brand-600 dark:text-brand-400 hover:underline flex items-center gap-1 bg-brand-50 dark:bg-brand-900/20 px-4 py-2 rounded-xl transition-colors hover:bg-brand-100 dark:hover:bg-brand-900/40"
                                         >
                                             View active round <ArrowRight className="w-4 h-4" />
                                         </Link>

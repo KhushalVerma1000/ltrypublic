@@ -66,7 +66,7 @@ export default function TicketLookup() {
     return (
         <div className="bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 rounded-2xl p-6 sm:p-8 shadow-sm">
             <div className="flex items-center gap-2 mb-1">
-                <Ticket className="w-5 h-5 text-purple-600" />
+                <Ticket className="w-5 h-5 text-brand-600" />
                 <h2 className="text-lg font-semibold text-gray-900 dark:text-white">Check your ticket</h2>
             </div>
             <p className="text-sm text-gray-500 dark:text-gray-400 mb-5">
@@ -79,7 +79,7 @@ export default function TicketLookup() {
                     value={ticketId}
                     onChange={(e) => setTicketId(e.target.value)}
                     placeholder="e.g. cmg2x9f0a0001..."
-                    className="flex-1 px-4 py-2.5 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-950 text-sm text-gray-900 dark:text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                    className="flex-1 px-4 py-2.5 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-950 text-sm text-gray-900 dark:text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-brand-500"
                 />
                 <button
                     type="submit"

@@ -158,7 +158,7 @@ export default async function PoolSeatsPage(props: {
                                 {selectedRound && (
                                     <>
                                         <span className="w-1 h-1 bg-gray-300 rounded-full" />
-                                        <span className="flex items-center gap-1.5 font-semibold text-purple-600 dark:text-purple-400">
+                                        <span className="flex items-center gap-1.5 font-semibold text-brand-600 dark:text-brand-400">
                                             <Trophy className="w-4 h-4" />
                                             Prize Pool: ₹{(perSeatPrice * Math.max((selectedRound.seatsSnapshot ?? 0) - (selectedRound.availableSeats ?? 0), 0)).toLocaleString('en-IN')}
                                         </span>
@@ -184,8 +184,8 @@ export default async function PoolSeatsPage(props: {
                                             key={round.publicId}
                                             href={`/pools/${params.publicId}?roundId=${round.publicId}`}
                                             className={`px-4 py-2 rounded-lg text-xs font-bold transition-all border ${isActive
-                                                    ? "bg-purple-600 border-purple-600 text-white shadow-lg shadow-purple-200 dark:shadow-none"
-                                                    : "bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 hover:border-purple-300"
+                                                    ? "bg-brand-600 border-brand-600 text-white shadow-lg shadow-brand-200 dark:shadow-none"
+                                                    : "bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 hover:border-brand-300"
                                                 }`}
                                         >
                                             Round {round.roundNumber}
@@ -248,7 +248,7 @@ export default async function PoolSeatsPage(props: {
                         <div className="space-y-6">
                             <div className="flex items-center justify-between">
                                 <h2 className="text-xl font-bold text-gray-900 dark:text-white flex items-center gap-2">
-                                    <div className="w-2 h-8 bg-purple-600 rounded-full" />
+                                    <div className="w-2 h-8 bg-brand-600 rounded-full" />
                                     Round {selectedRound.roundNumber} Seating
                                 </h2>
                                 <div className="text-sm text-gray-500">

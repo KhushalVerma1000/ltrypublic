@@ -15,7 +15,7 @@ function LoginForm() {
       <div className="w-full max-w-sm">
         {/* Logo */}
         <div className="flex items-center justify-center gap-2 mb-8">
-          <div className="w-9 h-9 bg-linear-to-br from-purple-600 to-purple-800 rounded-lg flex items-center justify-center">
+          <div className="w-9 h-9 bg-linear-to-br from-brand-600 to-brand-800 rounded-lg flex items-center justify-center">
             <span className="text-white font-bold text-base">HL</span>
           </div>
           <span className="text-xl font-semibold text-gray-900 dark:text-white">
@@ -59,7 +59,7 @@ function LoginForm() {
                 autoComplete="tel"
                 required
                 placeholder="9999999999"
-                className="w-full px-3.5 py-2.5 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-sm text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition"
+                className="w-full px-3.5 py-2.5 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-sm text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent transition"
               />
             </div>
 
@@ -78,7 +78,7 @@ function LoginForm() {
                 autoComplete="current-password"
                 required
                 placeholder="••••••••"
-                className="w-full px-3.5 py-2.5 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-sm text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition"
+                className="w-full px-3.5 py-2.5 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-sm text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent transition"
               />
             </div>
 
@@ -96,7 +96,7 @@ function LoginForm() {
             Don&apos;t have an account?{" "}
             <Link
               href={redirectPath ? `/signup?redirect=${encodeURIComponent(redirectPath)}` : "/signup"}
-              className="text-purple-600 dark:text-purple-400 font-medium hover:underline"
+              className="text-brand-600 dark:text-brand-400 font-medium hover:underline"
             >
               Sign up
             </Link>

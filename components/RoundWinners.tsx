@@ -35,7 +35,7 @@ export default function RoundWinners({ winners, yourSeatNames = [] }: { winners:
             case 1: return "text-amber-500";
             case 2: return "text-gray-400";
             case 3: return "text-amber-700";
-            default: return "text-purple-400";
+            default: return "text-brand-400";
         }
     };
 
@@ -86,7 +86,7 @@ export default function RoundWinners({ winners, yourSeatNames = [] }: { winners:
                                 <div>
                                     <p className="text-xs text-gray-500">Winning Seat</p>
                                     <p className="font-bold text-gray-900 dark:text-white flex items-center gap-1.5">
-                                        <Ticket className="w-3.5 h-3.5 text-purple-600" />
+                                        <Ticket className="w-3.5 h-3.5 text-brand-600" />
                                         Seat {winner.seat.name}
                                     </p>
                                 </div>

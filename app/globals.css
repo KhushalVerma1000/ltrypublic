@@ -1,99 +1,73 @@
 @import "tailwindcss";
 
-/* Light-only: the redesign has one calm, high-contrast theme. */
-@custom-variant dark (&:where(.dark, .dark *));
-
+/* ------------------------------------------------------------------
+   Design tokens — single source of truth for the public site.
+   Use these via Tailwind utilities (bg-brand-600, text-gold-500,
+   bg-paper …) instead of hardcoding hex values or default palettes.
+   ------------------------------------------------------------------ */
 @theme {
-  --font-sans: var(--font-dm-sans), system-ui, sans-serif;
-  --font-display: var(--font-baloo), var(--font-dm-sans), sans-serif;
+  --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 
-  /* Design tokens: navy and blue carry trust, gold always means money */
-  --color-navy: #0a2540;
-  --color-navy-2: #17406f;
-  --color-sky: #eaf1fb;
-  --color-line: #c6d6ee;
-  --color-track: #dce7f7;
-  --color-gold: #ffc83d;
-  --color-gold-edge: #b8860b;
-  --color-gold-ink: #8a5a00;
-  --color-ok-bg: #ddf3e6;
-  --color-ok-ink: #0b5b31;
-  --color-warn-bg: #fff0c2;
-  --color-err: #b42318;
-  --color-err-bg: #fee4e2;
+  /* Brand — deep field green. Primary actions, nav, links. */
+  --color-brand-50: #effaf5;
+  --color-brand-100: #d7f3e5;
+  --color-brand-200: #b0e6cc;
+  --color-brand-300: #7dd2ad;
+  --color-brand-400: #46b78a;
+  --color-brand-500: #229b70;
+  --color-brand-600: #147c59;
+  --color-brand-700: #106248;
+  --color-brand-800: #0f4e3a;
+  --color-brand-900: #0d4031;
+  --color-brand-950: #06241c;
 
-  /* The old purple scale now resolves to the trust blues, so existing
-     purple-* classes pick up the new brand without per-file edits. */
-  --color-purple-50: #eaf1fb;
-  --color-purple-100: #dce7f7;
-  --color-purple-200: #c6d6ee;
-  --color-purple-300: #9dbef5;
-  --color-purple-400: #6ea0f0;
-  --color-purple-500: #1d5fd1;
-  --color-purple-600: #1d5fd1;
-  --color-purple-700: #174daa;
-  --color-purple-800: #0f3a80;
-  --color-purple-900: #0a2540;
+  /* Gold — prizes, highlights, "Join" moments. Never for body text. */
+  --color-gold-50: #fff9e6;
+  --color-gold-100: #fff0bf;
+  --color-gold-200: #ffe18a;
+  --color-gold-300: #ffcf4d;
+  --color-gold-400: #f9b81d;
+  --color-gold-500: #e89c0a;
+  --color-gold-600: #c47a05;
+  --color-gold-700: #9a5a08;
 
-  --radius-card: 18px;
+  /* Warm off-white page surface and ink for headings. */
+  --color-paper: #faf8f3;
+  --color-ink: #11201a;
+
+  /* Radii + elevation used by cards */
+  --radius-card: 1.25rem;
+  --shadow-card: 0 1px 2px rgb(17 32 26 / 0.05), 0 8px 24px -12px rgb(17 32 26 / 0.18);
+  --shadow-card-hover: 0 2px 4px rgb(17 32 26 / 0.06), 0 18px 36px -14px rgb(17 32 26 / 0.28);
 }
 
 :root {
-  --background: #eaf1fb;
-  --foreground: #0a2540;
+  --background: #ffffff;
+  --foreground: #11201a;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
 }
 
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: var(--font-dm-sans), system-ui, sans-serif;
+  font-family: var(--font-sans), system-ui, -apple-system, "Segoe UI", sans-serif;
 }
 
-h1, h2 {
-  font-family: var(--font-display);
-  font-weight: 800;
-  letter-spacing: -0.01em;
-}
-
-/* Money and countdowns: digits must not jump while they change */
-.tabular { font-variant-numeric: tabular-nums; }
-
-@layer components {
-  .btn-primary,
-  .btn-secondary {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 46px;
-    font-weight: 800;
-    border-radius: 12px;
-    transition: transform 0.12s, box-shadow 0.12s;
-  }
-  .btn-primary {
-    background: var(--color-gold);
-    color: var(--color-navy);
-    box-shadow: 0 4px 0 var(--color-gold-edge);
-  }
-  .btn-secondary {
-    background: #fff;
-    color: var(--color-navy);
-    border: 2px solid var(--color-navy);
-    box-shadow: 0 4px 0 var(--color-navy);
-  }
-  .btn-primary:hover:not(:disabled),
-  .btn-secondary:hover:not(:disabled) { transform: translateY(-1px); }
-  .btn-primary:active:not(:disabled),
-  .btn-secondary:active:not(:disabled) { transform: translateY(3px); box-shadow: none; }
-  .btn-primary:disabled,
-  .btn-secondary:disabled { opacity: 0.5; cursor: not-allowed; }
-}
-
-a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible {
-  outline: 3px solid var(--color-purple-600);
-  outline-offset: 2px;
+/* Keep the sticky nav from covering anchor targets / focus rings */
+html {
+  scroll-padding-top: 7rem;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after { transition: none !important; animation: none !important; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
 }

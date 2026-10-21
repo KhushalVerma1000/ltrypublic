@@ -29,12 +29,12 @@ export default function SeatMap({ seats, onSeatSelect, selectedSeatIds = [] }: S
         const isSelected = selectedSeatIds.includes(seat.publicId)
 
         if (isSelected) {
-            return "bg-purple-600 text-white border-2 border-purple-700 shadow-md ring-2 ring-purple-600 ring-offset-1 dark:ring-offset-gray-950"
+            return "bg-brand-600 text-white border-2 border-brand-700 shadow-md ring-2 ring-brand-600 ring-offset-1 dark:ring-offset-gray-950"
         }
 
         switch (seat.status) {
             case "AVAILABLE":
-                return "bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:border-purple-500 hover:text-purple-600 transition-colors"
+                return "bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:border-brand-500 hover:text-brand-600 transition-colors"
             case "RESERVED":
                 return "bg-amber-500 text-white border-2 border-amber-600 shadow-sm opacity-80"
             case "SOLD":
@@ -90,7 +90,7 @@ export default function SeatMap({ seats, onSeatSelect, selectedSeatIds = [] }: S
                     <span className="text-sm font-medium text-gray-600 dark:text-gray-400">Available</span>
                 </div>
                 <div className="flex items-center gap-2.5">
-                    <div className="w-4 h-4 rounded-sm border-2 border-purple-700 bg-purple-600" />
+                    <div className="w-4 h-4 rounded-sm border-2 border-brand-700 bg-brand-600" />
                     <span className="text-sm font-medium text-gray-600 dark:text-gray-400">Selected</span>
                 </div>
                 <div className="flex items-center gap-2.5">
