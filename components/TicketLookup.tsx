@@ -84,7 +84,7 @@ export default function TicketLookup() {
                 <button
                     type="submit"
                     disabled={loading || !ticketId.trim()}
-                    className="px-6 py-2.5 bg-purple-600 hover:bg-purple-700 disabled:bg-purple-300 text-white rounded-lg font-medium text-sm flex items-center justify-center gap-2 transition-colors"
+                    className="px-6 py-2.5 btn-primary rounded-lg font-medium text-sm flex items-center justify-center gap-2 transition-colors"
                 >
                     {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Search className="w-4 h-4" />}
                     Check

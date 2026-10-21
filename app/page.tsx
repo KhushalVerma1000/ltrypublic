@@ -65,23 +65,23 @@ export default async function Home() {
               <p className="text-xs font-semibold uppercase tracking-widest text-purple-600 dark:text-purple-400 mb-4">
                 {featured ? `Round ${featured.roundNumber} closes soon` : "Haryana Lottery"}
               </p>
-              <h1 className="text-4xl md:text-5xl font-medium text-gray-900 dark:text-white mb-5 leading-tight">
-                Win big with{" "}
-                <span className="text-purple-600 dark:text-purple-400">Haryana Lottery</span>
+              <h1 className="text-5xl md:text-6xl text-navy mb-5 leading-[1.05]">
+                Pick your seats.{" "}
+                <span className="text-purple-600">Win the pool.</span>
               </h1>
               <p className="text-base text-gray-500 dark:text-gray-400 mb-8 leading-relaxed max-w-md">
-                Pick your seats, pay securely, and watch the draw happen live. Every rupee sold goes straight into the prize pool.
+                Choose up to 4 seats. When the round fills, winners are drawn live and paid to your wallet.
               </p>
               <div className="flex flex-col sm:flex-row gap-3">
                 <Link
                   href={featured ? `/pools/${featuredPool.publicId}?roundId=${featuredPool.activeRound.publicId}` : "/games"}
-                  className="px-6 py-2.5 bg-purple-600 hover:bg-purple-700 text-white rounded-lg font-medium text-sm text-center transition-colors"
+                  className="px-6 py-2.5 btn-primary text-sm text-center"
                 >
                   Pick your seats
                 </Link>
                 <Link
                   href="/results"
-                  className="px-6 py-2.5 border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 font-medium text-sm text-center transition-colors"
+                  className="btn-secondary px-6 py-2.5 text-sm text-center"
                 >
                   View results
                 </Link>
@@ -129,8 +129,8 @@ export default async function Home() {
              ))}
              
              <div className="border border-dashed border-gray-200 dark:border-gray-800 rounded-2xl p-8 bg-gray-50/50 dark:bg-gray-900/50 flex flex-col justify-center items-center text-center">
-                 <p className="text-gray-500 text-sm mb-4">View our full catalog of active lotteries</p>
-                 <Link href="/games" className="px-6 py-2.5 bg-purple-600 hover:bg-purple-700 text-white rounded-xl font-bold text-sm transition-colors shadow-lg shadow-purple-200 dark:shadow-none">
+                 <p className="text-gray-500 text-sm mb-4">See every pool that is open right now.</p>
+                 <Link href="/games" className="px-6 py-2.5 btn-primary rounded-xl font-bold text-sm transition-colors shadow-lg shadow-purple-200 dark:shadow-none">
                      Browse all games
                  </Link>
              </div>
@@ -138,53 +138,36 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* Features Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gray-50 dark:bg-gray-900 border-b border-gray-100 dark:border-gray-800">
+      {/* Trust band: plain statements, no icons or claims we cannot back up */}
+      <section className="bg-white border-y border-line">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 flex flex-col sm:flex-row sm:justify-between gap-2 text-sm font-bold text-navy">
+          <span>Draws happen in public</span>
+          <span>Payments secured by Razorpay</span>
+          <span>Winnings go to your wallet</span>
+        </div>
+      </section>
+
+      {/* How a round works */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-2xl font-medium text-gray-900 dark:text-white mb-2">Why Haryana Lottery?</h2>
-            <p className="text-sm text-gray-500 dark:text-gray-400">Built to be reliable, transparent, and easy to use</p>
-          </div>
-
-          <div className="grid md:grid-cols-4 gap-4">
-            <div className="bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-xl p-5">
-              <div className="w-8 h-8 rounded-lg bg-gray-50 dark:bg-gray-700 flex items-center justify-center mb-3">
-                <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
-                  <rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
-                </svg>
-              </div>
-              <p className="text-sm font-medium text-gray-900 dark:text-white mb-1">100% Secure</p>
-              <p className="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">Advanced encryption on all transactions and data.</p>
+          <h2 className="text-4xl text-navy mb-8">How a round works</h2>
+          <div className="grid md:grid-cols-[1.2fr_1fr] gap-5">
+            <div className="bg-white border-2 border-navy rounded-[18px] shadow-[0_5px_0_var(--color-navy)] p-8">
+              <p className="font-display font-extrabold text-6xl text-purple-600">1</p>
+              <h3 className="font-display font-extrabold text-2xl text-navy mt-1">Choose a round</h3>
+              <p className="text-navy/70 mt-2 max-w-sm">Each card shows its prize pool, seat price and when it closes.</p>
             </div>
-
-            <div className="bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-xl p-5">
-              <div className="w-8 h-8 rounded-lg bg-gray-50 dark:bg-gray-700 flex items-center justify-center mb-3">
-                <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
-                  <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
-                </svg>
+            <div className="grid gap-5">
+              <div className="bg-white border-2 border-navy rounded-[18px] shadow-[0_5px_0_var(--color-navy)] p-6">
+                <p className="font-display font-extrabold text-3xl text-purple-600">2</p>
+                <h3 className="font-display font-extrabold text-lg text-navy">Pick your seats</h3>
+                <p className="text-sm text-navy/70 mt-1">Tap seats yourself or let us pick. We hold them while you pay.</p>
               </div>
-              <p className="text-sm font-medium text-gray-900 dark:text-white mb-1">Instant results</p>
-              <p className="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">Real-time draws with immediate notifications.</p>
-            </div>
-
-            <div className="bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-xl p-5">
-              <div className="w-8 h-8 rounded-lg bg-gray-50 dark:bg-gray-700 flex items-center justify-center mb-3">
-                <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
-                  <rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/>
-                </svg>
+              <div className="bg-white border-2 border-navy rounded-[18px] shadow-[0_5px_0_var(--color-navy)] p-6">
+                <p className="font-display font-extrabold text-3xl text-purple-600">3</p>
+                <h3 className="font-display font-extrabold text-lg text-navy">Watch the draw</h3>
+                <p className="text-sm text-navy/70 mt-1">Winners are drawn publicly and paid to your wallet.</p>
               </div>
-              <p className="text-sm font-medium text-gray-900 dark:text-white mb-1">Easy payments</p>
-              <p className="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">UPI, cards, net banking — all accepted.</p>
-            </div>
-
-            <div className="bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-xl p-5">
-              <div className="w-8 h-8 rounded-lg bg-gray-50 dark:bg-gray-700 flex items-center justify-center mb-3">
-                <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
-                  <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/>
-                </svg>
-              </div>
-              <p className="text-sm font-medium text-gray-900 dark:text-white mb-1">Big rewards</p>
-              <p className="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">Generous prize pools and bonuses across all tiers.</p>
             </div>
           </div>
         </div>
@@ -193,15 +176,15 @@ export default async function Home() {
       {/* CTA Section */}
       <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gray-50 dark:bg-gray-900 border-b border-gray-100 dark:border-gray-800 text-center">
         <div className="max-w-xl mx-auto">
-          <h2 className="text-2xl font-medium text-gray-900 dark:text-white mb-2">Ready to win?</h2>
-          <p className="text-sm text-gray-500 dark:text-gray-400 mb-6">
-            Join thousands of winners. Get bonus credits on sign-up.
+          <h2 className="text-3xl text-navy mb-2">Ready to pick your seats?</h2>
+          <p className="text-sm text-gray-500 mb-6">
+            Create an account in a minute. You only pay when you book seats.
           </p>
           <Link
             href="/signup"
-            className="inline-block px-6 py-2.5 bg-purple-600 hover:bg-purple-700 text-white rounded-lg font-medium text-sm transition-colors"
+            className="inline-block px-6 py-2.5 btn-primary rounded-lg font-medium text-sm transition-colors"
           >
-            Get started
+            Create account
           </Link>
         </div>
       </section>
@@ -244,7 +227,7 @@ export default async function Home() {
           </div>
 
           <div className="border-t border-gray-100 dark:border-gray-800 pt-6">
-            <p className="text-xs text-gray-400">© 2024 Haryana Lottery. All rights reserved.</p>
+            <p className="text-xs text-gray-400">© {new Date().getFullYear()} Haryana Lottery. All rights reserved.</p>
           </div>
         </div>
       </footer>

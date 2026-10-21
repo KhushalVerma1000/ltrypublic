@@ -185,7 +185,7 @@ export default function SeatMapClient({
                             contact: user?.phone || ""
                         },
                         theme: {
-                            color: "#9333ea" // matches bg-purple-600
+                            color: "#1d5fd1" // matches the brand blue (purple-600 token)
                         },
                         modal: {
                             ondismiss: async function () {
@@ -254,7 +254,7 @@ export default function SeatMapClient({
                 <div className="flex flex-col sm:flex-row gap-3 justify-center">
                     <Link
                         href="/dashboard"
-                        className="px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white font-medium rounded-xl transition-colors inline-flex items-center justify-center gap-1.5"
+                        className="px-6 py-3 btn-primary font-medium rounded-xl transition-colors inline-flex items-center justify-center gap-1.5"
                     >
                         Go to dashboard <ArrowRight className="w-4 h-4" />
                     </Link>
@@ -331,17 +331,17 @@ export default function SeatMapClient({
                             <button
                                 type="submit"
                                 disabled={isPending || isVerifying || reservationExpired}
-                                className="px-8 py-3 bg-purple-600 hover:bg-purple-700 disabled:bg-purple-400 text-white font-medium rounded-xl shadow-lg shadow-purple-600/20 transition-all active:scale-95 w-full sm:w-auto flex items-center justify-center min-w-40"
+                                className="px-8 py-3 btn-primary font-medium rounded-xl transition-all w-full sm:w-auto flex items-center justify-center min-w-40"
                             >
-                                {isVerifying ? "Confirming payment…" : (isPending ? "Reserving your seats…" : reservationExpired ? "Reservation ended — reselect" : "Proceed to Book")}
+                                {isVerifying ? "Confirming payment…" : (isPending ? "Reserving your seats…" : reservationExpired ? "Hold ended. Pick your seats again." : "Reserve and pay")}
                             </button>
                         ) : (
                             <button
                                 type="button"
                                 onClick={() => router.push(`/login?redirect=${encodeURIComponent(window.location.pathname + window.location.search)}`)}
-                                className="px-8 py-3 bg-purple-600 hover:bg-purple-700 text-white font-medium rounded-xl shadow-lg shadow-purple-600/20 transition-all active:scale-95 w-full sm:w-auto"
+                                className="px-8 py-3 btn-primary font-medium rounded-xl transition-all w-full sm:w-auto"
                             >
-                                Log in to Book
+                                Log in to book seats
                             </button>
                         )}
                     </div>

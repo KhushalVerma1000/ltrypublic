@@ -49,13 +49,13 @@ export default function Navbar({ isLoggedIn = false }: { isLoggedIn?: boolean })
                   href="/login"
                   className="hidden sm:inline-block px-4 py-2 text-purple-600 border border-purple-600 rounded-lg hover:bg-purple-50 dark:hover:bg-gray-800 transition font-medium"
                 >
-                  Log In
+                  Log in
                 </Link>
                 <Link
                   href="/signup"
                   className="px-4 py-2 bg-gradient-to-r from-purple-600 to-purple-800 text-white rounded-lg hover:shadow-lg transition font-medium"
                 >
-                  Sign Up
+                  Sign up
                 </Link>
               </>
             )}
@@ -98,7 +98,7 @@ export default function Navbar({ isLoggedIn = false }: { isLoggedIn?: boolean })
               </Link>
             ) : (
               <Link href="/login" className="block px-4 py-2 mt-2 text-purple-600 border border-purple-600 rounded-lg hover:bg-purple-50">
-                Log In
+                Log in
               </Link>
             )}
           </div>
