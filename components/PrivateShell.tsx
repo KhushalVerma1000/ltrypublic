@@ -30,7 +30,7 @@ export default async function PrivateShell({
       <div className="pt-[100px]">
         <header className="bg-brand-900 text-white">
           <div className={`${widthClass} mx-auto px-3 sm:px-6 lg:px-8 pt-5 sm:pt-7`}>
-            <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-gold-300">My account</p>
+            <p className="text-2xs font-bold uppercase tracking-[0.18em] text-gold-300">My account</p>
             <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight mt-1">{title}</h1>
             {subtitle && <p className="text-sm text-brand-200 mt-1 max-w-2xl">{subtitle}</p>}
             <div className="mt-4">

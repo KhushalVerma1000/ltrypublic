@@ -231,36 +231,36 @@ export default function SeatMapClient({
                 <div className="w-14 h-14 rounded-full bg-emerald-50 dark:bg-emerald-500/10 flex items-center justify-center mx-auto mb-5">
                     <CheckCircle2 className="w-7 h-7 text-emerald-600 dark:text-emerald-400" strokeWidth={1.75} />
                 </div>
-                <h1 className="text-2xl font-semibold text-gray-900 dark:text-white mb-2">You're in</h1>
-                <p className="text-gray-500 dark:text-gray-400 mb-8">
+                <h1 className="text-3xl font-extrabold text-gray-900 dark:text-white mb-2">You're in</h1>
+                <p className="text-base text-gray-600 dark:text-gray-400 mb-8 capitalize">
                     {poolName ? `${poolName}` : "Your booking"}{roundNumber ? ` · Round ${roundNumber}` : ""}
                 </p>
 
                 <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-2xl p-6 text-left space-y-4 mb-8">
                     <div className="flex justify-between items-center">
-                        <span className="text-sm text-gray-500 dark:text-gray-400">Seats booked</span>
-                        <span className="font-medium text-gray-900 dark:text-white">{confirmed.seatNames.join(", ")}</span>
+                        <span className="text-meta text-gray-500 dark:text-gray-400 shrink-0">Seats booked</span>
+                        <span className="text-base font-semibold text-gray-900 dark:text-white text-right">{confirmed.seatNames.join(", ")}</span>
                     </div>
                     <div className="flex justify-between items-center pt-4 border-t border-gray-100 dark:border-gray-800">
-                        <span className="text-sm text-gray-500 dark:text-gray-400">Amount paid</span>
-                        <span className="font-semibold text-gray-900 dark:text-white">₹{confirmed.amount.toLocaleString("en-IN")}</span>
+                        <span className="text-meta text-gray-500 dark:text-gray-400">Amount paid</span>
+                        <span className="text-xl font-extrabold text-gray-900 dark:text-white tabular">₹{confirmed.amount.toLocaleString("en-IN")}</span>
                     </div>
                 </div>
 
-                <p className="text-sm text-gray-500 dark:text-gray-400 mb-8">
+                <p className="text-[15px] leading-relaxed text-gray-600 dark:text-gray-400 mb-8">
                     We'll draw this round automatically once it closes — no need to do anything else. You'll see the result here and in your wallet.
                 </p>
 
                 <div className="flex flex-col sm:flex-row gap-3 justify-center">
                     <Link
                         href="/dashboard"
-                        className="px-6 py-3 btn-primary font-medium rounded-xl transition-colors inline-flex items-center justify-center gap-1.5"
+                        className="px-6 py-3 btn-primary text-base rounded-xl inline-flex items-center justify-center gap-1.5"
                     >
                         Go to dashboard <ArrowRight className="w-4 h-4" />
                     </Link>
                     <Link
                         href="/games"
-                        className="px-6 py-3 border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 font-medium rounded-xl hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors inline-flex items-center justify-center gap-1.5"
+                        className="px-6 py-3 border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 text-base font-semibold rounded-xl hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors inline-flex items-center justify-center gap-1.5"
                     >
                         <Ticket className="w-4 h-4" /> Browse more pools
                     </Link>

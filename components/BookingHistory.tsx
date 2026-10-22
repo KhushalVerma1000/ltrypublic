@@ -185,7 +185,7 @@ export default function BookingHistory({
                     {booking.bookedSeats?.map((bs) => (
                       <span
                         key={bs.seat.publicId}
-                        className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 border border-gray-200 dark:border-gray-700"
+                        className="inline-flex items-center px-2 py-0.5 rounded text-2xs font-bold bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 border border-gray-200 dark:border-gray-700"
                       >
                         SEAT {bs.seatName}
                       </span>
@@ -202,7 +202,7 @@ export default function BookingHistory({
                       <IndianRupee className="w-4 h-4" />
                       {booking.amount}
                     </div>
-                    <p className="text-[10px] text-gray-400 uppercase tracking-widest font-medium">
+                    <p className="text-2xs text-gray-400 uppercase tracking-widest font-medium">
                       Total Paid
                     </p>
                   </div>

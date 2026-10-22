@@ -142,7 +142,7 @@ export default async function GamesPage() {
                                                 </div>
                                                 <div>
                                                     <h3 className="font-bold text-ink text-sm sm:text-base uppercase tracking-wider">{poolData.name}</h3>
-                                                    <p className="text-[10px] text-gray-400 font-semibold uppercase tracking-widest">Hall of Fame</p>
+                                                    <p className="text-2xs text-gray-400 font-semibold uppercase tracking-widest">Hall of Fame</p>
                                                 </div>
                                             </div>
                                             <Link href={`/pools/${poolData.id}`} className="text-xs font-bold text-brand-700 hover:text-brand-800 transition-colors flex items-center gap-1 group">
@@ -192,9 +192,9 @@ export default async function GamesPage() {
                                                                 <div className="min-w-0">
                                                                     <div className="flex items-center gap-1.5">
                                                                         <span className="text-xs font-mono font-bold text-ink truncate">Seat {winner.seat?.name}</span>
-                                                                        <span className="text-[10px] text-gray-400 font-medium shrink-0">R#{winner.round?.roundNumber}</span>
+                                                                        <span className="text-2xs text-gray-400 font-medium shrink-0">R#{winner.round?.roundNumber}</span>
                                                                     </div>
-                                                                    <p className="text-[10px] text-gray-400 font-semibold uppercase tracking-wider">Ticket Holder</p>
+                                                                    <p className="text-2xs text-gray-400 font-semibold uppercase tracking-wider">Ticket Holder</p>
                                                                 </div>
                                                             </div>
 
@@ -203,7 +203,7 @@ export default async function GamesPage() {
                                                                 <span className="text-xs sm:text-sm font-black text-brand-700">
                                                                     ₹{parseFloat(winner.prize).toLocaleString()}
                                                                 </span>
-                                                                <p className="text-[10px] text-gray-400 font-semibold uppercase tracking-wider">Won Prize</p>
+                                                                <p className="text-2xs text-gray-400 font-semibold uppercase tracking-wider">Won Prize</p>
                                                             </div>
                                                         </div>
                                                     );

@@ -112,7 +112,7 @@ export default function UserWinnings({ winnings }: { winnings: Winner[] }) {
                   <IndianRupee className="w-5 h-5 stroke-[3]" />
                   {parseFloat(winner.prize).toLocaleString()}
                 </div>
-                <p className="text-[10px] text-gray-400 uppercase tracking-widest font-bold">
+                <p className="text-2xs text-gray-400 uppercase tracking-widest font-bold">
                   Winning Prize
                 </p>
               </div>

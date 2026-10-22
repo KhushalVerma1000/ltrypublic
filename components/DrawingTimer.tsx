@@ -61,7 +61,7 @@ export function DrawingTimer({ drawnAt, compact = false }: DrawingTimerProps) {
 
   if (compact) {
     return (
-      <div className="flex items-center justify-center gap-1.5 w-full h-[46px] rounded-xl bg-brand-50 border border-brand-200 text-brand-800 text-xs sm:text-sm font-bold">
+      <div className="flex items-center justify-center gap-1.5 w-full h-[42px] sm:h-[46px] rounded-xl bg-brand-50 border border-brand-200 text-brand-800 text-sm sm:text-[15px] font-bold">
         <Timer className="h-4 w-4 shrink-0 animate-pulse" />
         {isDrawing ? (
           <span>Drawing now…</span>

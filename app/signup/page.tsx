@@ -103,7 +103,7 @@ function SignupForm() {
 
             {/* Bank Details Header */}
             <div className="pt-2">
-              <p className="text-[10px] font-bold uppercase tracking-widest text-gray-400 dark:text-gray-500">
+              <p className="text-2xs font-bold uppercase tracking-widest text-gray-400 dark:text-gray-500">
                 Payout Information
               </p>
             </div>

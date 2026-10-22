@@ -197,7 +197,7 @@ export default function Navbar({ isLoggedIn = false }: { isLoggedIn?: boolean })
               </div>
             )}
 
-            <p className="px-3 pt-1 text-[11px] font-bold uppercase tracking-widest text-gray-400">Explore</p>
+            <p className="px-3 pt-1 text-2xs font-bold uppercase tracking-widest text-gray-400">Explore</p>
             {PUBLIC_LINKS.map(({ href, label, icon: Icon }) => (
               <Link
                 key={href}
@@ -211,7 +211,7 @@ export default function Navbar({ isLoggedIn = false }: { isLoggedIn?: boolean })
 
             {loggedIn ? (
               <>
-                <p className="px-3 pt-3 text-[11px] font-bold uppercase tracking-widest text-gray-400">My account</p>
+                <p className="px-3 pt-3 text-2xs font-bold uppercase tracking-widest text-gray-400">My account</p>
                 {MEMBER_LINKS.map(({ href, label, icon: Icon }) => (
                   <Link
                     key={href}

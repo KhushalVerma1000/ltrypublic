@@ -64,7 +64,7 @@ export default function RoundWinners({ winners, yourSeatNames = [] }: { winners:
                         className={`p-6 rounded-2xl border transition-all hover:shadow-lg ${getBgColor(winner.position)} ${isYours ? "ring-2 ring-emerald-500 ring-offset-2 dark:ring-offset-gray-950 relative" : ""}`}
                     >
                         {isYours && (
-                            <span className="absolute -top-3 left-6 bg-emerald-600 text-white text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full shadow-sm">
+                            <span className="absolute -top-3 left-6 bg-emerald-600 text-white text-2xs font-bold uppercase tracking-wider px-2.5 py-1 rounded-full shadow-sm">
                                 You won
                             </span>
                         )}
@@ -73,7 +73,7 @@ export default function RoundWinners({ winners, yourSeatNames = [] }: { winners:
                                 <Medal className="w-6 h-6" />
                             </div>
                             <div className="text-right">
-                                <p className="text-[10px] uppercase tracking-widest font-bold text-gray-400">Position</p>
+                                <p className="text-2xs uppercase tracking-widest font-bold text-gray-400">Position</p>
                                 <p className="text-xl font-black text-gray-900 dark:text-white">#{winner.position}</p>
                             </div>
                         </div>
@@ -93,7 +93,7 @@ export default function RoundWinners({ winners, yourSeatNames = [] }: { winners:
                             </div>
 
                             <div className="pt-4 border-t border-gray-100 dark:border-gray-800">
-                                <p className="text-[10px] uppercase tracking-widest font-bold text-gray-400 mb-1">Prize Won</p>
+                                <p className="text-2xs uppercase tracking-widest font-bold text-gray-400 mb-1">Prize Won</p>
                                 <p className="text-2xl font-black text-emerald-600 dark:text-emerald-400">
                                     ₹{parseFloat(winner.prize).toLocaleString()}
                                 </p>

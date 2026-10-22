@@ -189,14 +189,14 @@ export default async function PoolSeatsPage(props: {
                                                 }`}
                                         >
                                             Round {round.roundNumber}
-                                            <span className={`ml-2 px-1.5 py-0.5 rounded-md text-[8px] uppercase ${statusColor}`}>
+                                            <span className={`ml-2 px-1.5 py-0.5 rounded-md text-2xs uppercase ${statusColor}`}>
                                                 {round.status}
                                             </span>
                                         </Link>
                                     )
                                 })}
                             </div>
-                            <p className="text-[11px] text-gray-400 dark:text-gray-500">
+                            <p className="text-2xs text-gray-400 dark:text-gray-500">
                                 Active = open to book · Upcoming = opens soon · Drawing = being drawn now · Closed = results are in
                             </p>
                         </div>

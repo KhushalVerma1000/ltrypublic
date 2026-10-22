@@ -129,21 +129,21 @@ export default async function DashboardPage({
               </div>
               
               <div className="pt-6 mt-6 border-t border-gray-50 dark:border-gray-800">
-                <p className="text-[10px] font-bold uppercase tracking-widest text-gray-400 dark:text-gray-500 mb-4">
+                <p className="text-2xs font-bold uppercase tracking-widest text-gray-400 dark:text-gray-500 mb-4">
                   Payout Information
                 </p>
                 <div className="space-y-3">
                   <div className="bg-gray-50 dark:bg-gray-800/50 rounded-lg p-3">
-                    <p className="text-[10px] text-gray-500 mb-0.5 uppercase">Bank Account</p>
+                    <p className="text-2xs text-gray-500 mb-0.5 uppercase tracking-wide">Bank Account</p>
                     <p className="text-sm font-medium text-gray-900 dark:text-white font-mono">{user?.bankAccountNumber ?? "Not set"}</p>
                   </div>
                   <div className="grid grid-cols-2 gap-3">
                     <div className="bg-gray-50 dark:bg-gray-800/50 rounded-lg p-3">
-                      <p className="text-[10px] text-gray-500 mb-0.5 uppercase">IFSC</p>
+                      <p className="text-2xs text-gray-500 mb-0.5 uppercase">IFSC</p>
                       <p className="text-sm font-medium text-gray-900 dark:text-white uppercase">{user?.bankIFSCCode ?? "—"}</p>
                     </div>
                     <div className="bg-gray-50 dark:bg-gray-800/50 rounded-lg p-3">
-                      <p className="text-[10px] text-gray-500 mb-0.5 uppercase">UPI ID</p>
+                      <p className="text-2xs text-gray-500 mb-0.5 uppercase">UPI ID</p>
                       <p className="text-sm font-medium text-gray-900 dark:text-white">{user?.upiId ?? "—"}</p>
                     </div>
                   </div>
@@ -152,7 +152,7 @@ export default async function DashboardPage({
             </div>
 
             {/* Stats Grid */}
-            <div className="grid grid-cols-3 lg:grid-cols-1 gap-3 lg:gap-4">
+            <div className="grid grid-cols-1 gap-2.5 lg:gap-4">
               {[
                 { label: "Active tickets", value: activeTicketsCount, color: "text-brand-600" },
                 { label: "Total winnings", value: `₹${totalWinningsAmount.toLocaleString()}`, color: "text-brand-700" },
@@ -160,10 +160,10 @@ export default async function DashboardPage({
               ].map((stat) => (
                 <div
                   key={stat.label}
-                  className="bg-white dark:bg-gray-900 border border-brand-100 dark:border-gray-800 rounded-2xl p-5 shadow-sm"
+                  className="bg-white dark:bg-gray-900 border border-brand-100 dark:border-gray-800 rounded-2xl px-4 py-3.5 lg:p-5 shadow-sm flex items-center justify-between gap-3 lg:block"
                 >
-                  <p className="text-[10px] sm:text-xs font-medium text-gray-500 mb-1 uppercase tracking-wider">{stat.label}</p>
-                  <p className={`text-xl sm:text-3xl font-bold ${stat.color} truncate`}>
+                  <p className="text-meta lg:text-xs font-semibold text-gray-600 lg:text-gray-500 lg:mb-1 lg:uppercase tracking-wide lg:tracking-wider">{stat.label}</p>
+                  <p className={`text-2xl lg:text-3xl font-extrabold tabular ${stat.color}`}>
                     {stat.value}
                   </p>
                 </div>

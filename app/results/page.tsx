@@ -153,7 +153,7 @@ export default async function ResultsPage() {
                                                         <div className="overflow-x-auto">
                                                             <table className="w-full text-left">
                                                                 <thead>
-                                                                    <tr className="text-[10px] uppercase tracking-wider text-gray-400 bg-white dark:bg-gray-900 border-b border-gray-50 dark:border-gray-800">
+                                                                    <tr className="text-2xs uppercase tracking-wider text-gray-400 bg-white dark:bg-gray-900 border-b border-gray-50 dark:border-gray-800">
                                                                         <th className="px-5 py-3 font-semibold">Rank</th>
                                                                         <th className="px-5 py-3 font-semibold">Seat</th>
                                                                         <th className="px-5 py-3 font-semibold">Status</th>
@@ -178,16 +178,16 @@ export default async function ResultsPage() {
                                                                                     <span className="text-sm font-mono font-bold text-gray-900 dark:text-white">
                                                                                         {winner.seat?.name}
                                                                                     </span>
-                                                                                    <span className="text-[9px] text-gray-400 uppercase tracking-wider font-semibold">Ticket Holder</span>
+                                                                                    <span className="text-2xs text-gray-400 uppercase tracking-wider font-semibold">Ticket Holder</span>
                                                                                 </div>
                                                                             </td>
                                                                             <td className="px-5 py-4">
                                                                                 {winner.paid ? (
-                                                                                    <span className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider text-emerald-600 bg-emerald-50 px-2 py-1 rounded-md border border-emerald-100">
+                                                                                    <span className="inline-flex items-center gap-1 text-2xs font-bold uppercase tracking-wider text-emerald-600 bg-emerald-50 px-2 py-1 rounded-md border border-emerald-100">
                                                                                         Paid out
                                                                                     </span>
                                                                                 ) : (
-                                                                                    <span className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider text-amber-600 bg-amber-50 px-2 py-1 rounded-md border border-amber-100">
+                                                                                    <span className="inline-flex items-center gap-1 text-2xs font-bold uppercase tracking-wider text-amber-600 bg-amber-50 px-2 py-1 rounded-md border border-amber-100">
                                                                                         Pending
                                                                                     </span>
                                                                                 )}

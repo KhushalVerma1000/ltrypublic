@@ -66,7 +66,7 @@ export default function SeatMap({ seats, onSeatSelect, selectedSeatIds = [] }: S
                                         onClick={() => onSeatSelect?.(seat)}
                                         disabled={seat.status !== "AVAILABLE"}
                                         className={[
-                                            "w-9 h-9 sm:w-11 sm:h-11 rounded-t-xl rounded-b sm:rounded-t-2xl sm:rounded-b-md flex items-center justify-center text-[10px] sm:text-xs font-semibold shrink-0 transition-colors",
+                                            "w-9 h-9 sm:w-11 sm:h-11 rounded-t-xl rounded-b sm:rounded-t-2xl sm:rounded-b-md flex items-center justify-center text-2xs sm:text-xs font-semibold shrink-0 transition-colors",
                                             seat.status === "AVAILABLE" ? "cursor-pointer" : "cursor-not-allowed",
                                             getSeatColor(seat)
                                         ].join(" ")}
