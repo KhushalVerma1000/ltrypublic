@@ -3,7 +3,7 @@
 import { IndianRupee, ArrowDownRight, ArrowUpRight, Ticket, Trophy, RotateCcw, Wrench, ChevronLeft, ChevronRight } from "lucide-react";
 import Link from "next/link";
 
-type LedgerType = "BOOKING_PAYMENT" | "WINNER_PAYOUT" | "BOOKING_REFUND" | "MANUAL_CREDIT" | "MANUAL_DEBIT";
+type LedgerType = "WALLET_TOPUP" | "WITHDRAWAL" | "BOOKING_PAYMENT" | "WINNER_PAYOUT" | "BOOKING_REFUND" | "MANUAL_CREDIT" | "MANUAL_DEBIT";
 type LedgerDirection = "CREDIT" | "DEBIT";
 
 interface LedgerEntry {
@@ -30,6 +30,8 @@ interface Pagination {
 // Plain-language label for what happened, written from the player's side of
 // the counter, not the system's — matches what the entry actually paid for.
 const ENTRY_COPY: Record<LedgerType, { label: string; icon: typeof Ticket }> = {
+  WALLET_TOPUP: { label: "Payment received", icon: IndianRupee },
+  WITHDRAWAL: { label: "Withdrawal", icon: Trophy },
   BOOKING_PAYMENT: { label: "Ticket purchase", icon: Ticket },
   WINNER_PAYOUT: { label: "Prize payout", icon: Trophy },
   BOOKING_REFUND: { label: "Refund", icon: RotateCcw },
@@ -71,14 +73,18 @@ function Rupee({ value }: { value: number }) {
 
 export default function WalletLedger({
   balance,
+  totalSpent = "0",
+  totalWon = "0",
   entries,
   pagination,
 }: {
   balance: string;
+  totalSpent?: string;
+  totalWon?: string;
   entries: LedgerEntry[];
   pagination: Pagination;
 }) {
-  const balanceNum = parseFloat(balance || "0");
+  const balanceNum = parseFloat(totalWon || "0") - parseFloat(totalSpent || "0");
   const totalIn = entries
     .filter((e) => e.direction === "CREDIT")
     .reduce((acc, e) => acc + parseFloat(e.amount), 0);

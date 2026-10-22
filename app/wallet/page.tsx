@@ -7,7 +7,7 @@ async function getLedger(page = 1, limit = 15) {
   const accessToken = cookieStore.get("accessToken")?.value;
   const refreshToken = cookieStore.get("refreshToken")?.value;
 
-  const empty = { balance: "0", data: [], pagination: { page: 1, limit, total: 0, totalPages: 0, hasNext: false, hasPrev: false } };
+  const empty = { balance: "0", totalSpent: "0", totalWon: "0", data: [], pagination: { page: 1, limit, total: 0, totalPages: 0, hasNext: false, hasPrev: false } };
 
   if (!accessToken && !refreshToken) return empty;
 
@@ -36,7 +36,7 @@ export default async function WalletPage({
   const params = await searchParams;
   const page = typeof params.page === "string" ? parseInt(params.page) : 1;
 
-  const { balance, data: entries, pagination } = await getLedger(page, 15);
+  const { balance, totalSpent, totalWon, data: entries, pagination } = await getLedger(page, 15);
 
   return (
     <PrivateShell
@@ -44,7 +44,7 @@ export default async function WalletPage({
       subtitle="A running record of every ticket you've bought and every prize you've won."
       widthClass="max-w-4xl"
     >
-      <WalletLedger balance={balance} entries={entries} pagination={pagination} />
+      <WalletLedger balance={balance} totalSpent={totalSpent} totalWon={totalWon} entries={entries} pagination={pagination} />
     </PrivateShell>
   );
 }
