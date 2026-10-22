@@ -79,11 +79,12 @@ export default function PoolCard({
             {/* Illustration panel */}
             <div className={`relative aspect-[5/4] sm:aspect-[16/10] bg-gradient-to-br ${tint} overflow-hidden`}>
                 <div className="absolute inset-x-0 top-0 flex items-start justify-between p-2 sm:p-3 z-10">
-                    <span className={`px-2 py-0.5 rounded-full text-[10px] sm:text-xs font-bold uppercase tracking-wide shadow-sm ${status.className}`}>
+                    <span className={`px-2 py-0.5 rounded-full text-[10px] sm:text-xs font-bold uppercase tracking-wide shadow-sm whitespace-nowrap ${status.className}`}>
                         {status.label}
                     </span>
-                    <span className="px-2 py-0.5 rounded-full bg-white/90 text-ink text-[10px] sm:text-xs font-bold shadow-sm">
-                        Round {round?.roundNumber}
+                    <span className="px-2 py-0.5 rounded-full bg-white/90 text-ink text-[10px] sm:text-xs font-bold shadow-sm whitespace-nowrap">
+                        <span className="sm:hidden">R{round?.roundNumber}</span>
+                        <span className="hidden sm:inline">Round {round?.roundNumber}</span>
                     </span>
                 </div>
 
@@ -125,9 +126,10 @@ export default function PoolCard({
 
             {/* Body */}
             <div className="flex flex-col flex-1 gap-2.5 p-3 sm:p-4 pt-4 sm:pt-5">
-                <div className="min-w-0">
-                    <h3 className="text-sm sm:text-base font-extrabold text-ink capitalize truncate">{pool.name}</h3>
-                    {pool.notes && <p className="text-xs text-gray-500 truncate mt-0.5">{pool.notes}</p>}
+                {/* Fixed height: name + one notes line, so cards without notes still line up */}
+                <div className="min-w-0 h-11 sm:h-12">
+                    <h3 className="text-sm sm:text-base font-extrabold text-ink capitalize truncate leading-tight">{pool.name}</h3>
+                    <p className="text-xs text-gray-500 truncate mt-0.5 h-4">{pool.notes ?? "\u00A0"}</p>
                 </div>
 
                 <div className="flex items-baseline gap-1 text-ink">
@@ -139,7 +141,7 @@ export default function PoolCard({
                 {/* Seat fill */}
                 <div>
                     <div
-                        className="h-2 rounded-full bg-brand-50 overflow-hidden"
+                        className="h-2 rounded-full bg-brand-100 ring-1 ring-inset ring-brand-200 overflow-hidden"
                         role="progressbar"
                         aria-valuemin={0}
                         aria-valuemax={total}
@@ -151,7 +153,7 @@ export default function PoolCard({
                             style={{ width: `${fillPct}%` }}
                         />
                     </div>
-                    <p className={`mt-1 text-xs font-semibold ${isLow ? "text-gold-700" : "text-gray-500"}`}>
+                    <p className={`mt-1 text-xs font-semibold whitespace-nowrap truncate ${isLow ? "text-gold-700" : "text-gray-500"}`}>
                         {isSoldOut ? "All seats booked" : isLow ? `Only ${available} left` : `${available} of ${total} left`}
                     </p>
                 </div>
@@ -164,19 +166,26 @@ export default function PoolCard({
                 </p>
 
                 {/* CTA */}
-                <div className="mt-auto pt-1">
+                <div className="mt-auto pt-1 pb-1">
                     {isDrawing && round?.drawnAt ? (
                         <DrawingTimer drawnAt={round.drawnAt} compact />
                     ) : (
                         <div
-                            className={`flex items-center justify-center gap-1.5 h-10 rounded-xl text-sm font-bold transition-colors ${
+                            className={`flex items-center justify-center gap-1.5 h-[46px] w-full rounded-xl text-sm whitespace-nowrap ${
                                 isSoldOut
-                                    ? "bg-gray-100 text-gray-700 group-hover:bg-gray-200"
-                                    : "bg-brand-700 text-white group-hover:bg-brand-800"
+                                    ? "bg-gray-100 text-gray-700 font-bold group-hover:bg-gray-200 transition-colors"
+                                    : "btn-primary group-hover:-translate-y-px"
                             }`}
                         >
-                            {isSoldOut ? "View seats" : "Pick your seats"}
-                            <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
+                            {isSoldOut ? (
+                                "View seats"
+                            ) : (
+                                <>
+                                    <span className="sm:hidden">Pick seats</span>
+                                    <span className="hidden sm:inline">Pick your seats</span>
+                                </>
+                            )}
+                            <ArrowRight className="w-4 h-4 shrink-0 transition-transform group-hover:translate-x-0.5" />
                         </div>
                     )}
                 </div>

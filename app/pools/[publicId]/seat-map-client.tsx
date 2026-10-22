@@ -270,7 +270,7 @@ export default function SeatMapClient({
     }
 
     return (
-        <div className="flex flex-col gap-8">
+        <div className={`flex flex-col gap-8 ${selectedIds.length > 0 ? "pb-44 sm:pb-32" : ""}`}>
             {state?.error && (
                 <div className="bg-red-50 dark:bg-red-900/30 text-red-600 dark:text-red-400 p-4 rounded-xl text-center font-medium border border-red-200 dark:border-red-800">
                     {state.error}
@@ -303,13 +303,13 @@ export default function SeatMapClient({
 
             {/* Summary Bar - Bottom Sticky */}
             {selectedIds.length > 0 && (
-                <form action={formAction} className="fixed bottom-0 left-0 right-0 p-4 bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800 shadow-[0_-10px_40px_rgba(0,0,0,0.05)] z-40 animate-in slide-in-from-bottom flex justify-center">
+                <form action={formAction} className="fixed bottom-0 left-0 right-0 px-4 pt-3 pb-[max(1rem,env(safe-area-inset-bottom))] bg-white border-t-4 border-gold-400 shadow-[0_-12px_40px_rgba(17,32,26,0.18)] z-40 animate-in slide-in-from-bottom flex justify-center">
                     <input type="hidden" name="roundId" value={roundId} />
                     <input type="hidden" name="seats" value={JSON.stringify(selectedIds)} />
                     <input type="hidden" name="amount" value={totalAmount} />
 
-                    <div className="flex flex-col sm:flex-row items-center justify-between w-full max-w-4xl gap-4">
-                        <div className="flex flex-col gap-1 text-center sm:text-left">
+                    <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between w-full max-w-4xl gap-3 sm:gap-4">
+                        <div className="flex flex-col gap-0.5 text-center sm:text-left min-w-0">
                             {state?.success && state?.tokenExpiresAt && !reservationExpired && (
                                 <div className="mb-1">
                                     <ReservationCountdown
@@ -318,10 +318,10 @@ export default function SeatMapClient({
                                     />
                                 </div>
                             )}
-                            <p className="text-sm text-gray-500 dark:text-gray-400">
-                                {selectedIds.length} seat{selectedIds.length > 1 ? 's' : ''} • Total: <span className="font-semibold text-gray-900 dark:text-white">₹{totalAmount}</span>
+                            <p className="text-sm text-gray-600">
+                                {selectedIds.length} seat{selectedIds.length > 1 ? 's' : ''} • Total: <span className="text-lg font-extrabold text-ink tabular">₹{totalAmount}</span>
                             </p>
-                            <p className="font-semibold text-gray-900 dark:text-white max-w-50 sm:max-w-md truncate" title={liveSeats.filter(s => selectedIds.includes(s.publicId)).map(s => s.name).join(', ')}>
+                            <p className="text-sm font-semibold text-brand-700 truncate sm:max-w-md" title={liveSeats.filter(s => selectedIds.includes(s.publicId)).map(s => s.name).join(', ')}>
                                 {liveSeats.filter(s => selectedIds.includes(s.publicId)).map(s => s.name).join(', ')}
                             </p>
                         </div>
@@ -331,7 +331,7 @@ export default function SeatMapClient({
                             <button
                                 type="submit"
                                 disabled={isPending || isVerifying || reservationExpired}
-                                className="px-8 py-3 btn-primary font-medium rounded-xl transition-all w-full sm:w-auto flex items-center justify-center min-w-40"
+                                className="px-8 py-3 btn-primary cta-attention text-base rounded-xl w-full sm:w-auto min-w-48 whitespace-nowrap"
                             >
                                 {isVerifying ? "Confirming payment…" : (isPending ? "Reserving your seats…" : reservationExpired ? "Hold ended. Pick your seats again." : "Reserve and pay")}
                             </button>
@@ -339,7 +339,7 @@ export default function SeatMapClient({
                             <button
                                 type="button"
                                 onClick={() => router.push(`/login?redirect=${encodeURIComponent(window.location.pathname + window.location.search)}`)}
-                                className="px-8 py-3 btn-primary font-medium rounded-xl transition-all w-full sm:w-auto"
+                                className="px-8 py-3 btn-primary cta-attention text-base rounded-xl w-full sm:w-auto min-w-48 whitespace-nowrap"
                             >
                                 Log in to book seats
                             </button>
