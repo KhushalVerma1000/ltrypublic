@@ -3,6 +3,7 @@ import Link from "next/link"
 import PrivateShell from "@/components/PrivateShell"
 import BookingHistory from "@/components/BookingHistory"
 import UserWinnings from "@/components/UserWinnings"
+import PayoutStatus, { type PayoutVerification } from "@/components/PayoutStatus"
 
 interface User {
   id: number
@@ -64,6 +65,34 @@ async function getWinnings() {
   }
 }
 
+async function getPayoutStatus(): Promise<{ status: PayoutVerification; reason: string | null } | null> {
+  const cookieStore = await cookies()
+  const accessToken = cookieStore.get("accessToken")?.value
+  const refreshToken = cookieStore.get("refreshToken")?.value
+
+  if (!accessToken && !refreshToken) return null
+
+  try {
+    const res = await fetch(`${process.env.API_URL}/users/me`, {
+      headers: {
+        "Cookie": `accessToken=${accessToken || ''}; refreshToken=${refreshToken || ''}`
+      },
+      next: { revalidate: 0 }
+    })
+
+    if (!res.ok) return null
+    const data = await res.json()
+    if (!data.success) return null
+    return {
+      status: data.data.payoutVerification as PayoutVerification,
+      reason: data.data.payoutVerificationReason ?? null
+    }
+  } catch (e) {
+    console.error("Error fetching payout status:", e)
+    return null
+  }
+}
+
 export default async function DashboardPage({
   searchParams,
 }: {
@@ -76,6 +105,7 @@ export default async function DashboardPage({
   const rawUser = cookieStore.get("user")?.value
   const { data: bookings, pagination } = await getBookings(page, 10)
   const winnings = await getWinnings()
+  const payout = await getPayoutStatus()
 
   let user: User | null = null
   if (rawUser) {
@@ -133,6 +163,11 @@ export default async function DashboardPage({
                   Payout Information
                 </p>
                 <div className="space-y-3">
+                  <PayoutStatus
+                    status={payout?.status ?? null}
+                    reason={payout?.reason}
+                    hasUnpaidWinnings={winnings.some((w: any) => !w.paid)}
+                  />
                   <div className="bg-gray-50 dark:bg-gray-800/50 rounded-lg p-3">
                     <p className="text-2xs text-gray-500 mb-0.5 uppercase tracking-wide">Bank Account</p>
                     <p className="text-sm font-medium text-gray-900 dark:text-white font-mono">{user?.bankAccountNumber ?? "Not set"}</p>
